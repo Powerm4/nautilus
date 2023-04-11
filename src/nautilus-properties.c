@@ -1348,25 +1348,19 @@ properties_widget_update (NautilusPropertiesWidget *self,
 }
 
 static void
-update_files_callback (gpointer data)
+update_files_callback (NautilusPropertiesWidget *self)
 {
-    NautilusPropertiesWidget *self;
-
-    self = NAUTILUS_PROPERTIES_WIDGET (data);
+    /* Take over list of change files and reset timer */
+    g_autolist (NautilusFile) changed_files = g_steal_pointer (&self->changed_files);
 
     self->update_files_timeout_id = 0;
 
-    properties_widget_update (self, self->changed_files);
+    properties_widget_update (self, changed_files);
 
     if (self->files == NULL)
     {
         /* Hide properties if no files are left */
         g_signal_emit (self, signals[HIDE], 0);
-    }
-    else
-    {
-        nautilus_file_list_free (self->changed_files);
-        self->changed_files = NULL;
     }
 }
 
