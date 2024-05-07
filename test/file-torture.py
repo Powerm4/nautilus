@@ -33,28 +33,21 @@ extensions = (".doc", ".gif", ".jpg", ".png", ".xls", ".odt", ".odp", ".ods", ".
 files = []
 directories = []
 
-def get_random_file_index ():
+def get_random_file_index():
     n = len (files)
-    if n == 0:
-        return -1
-    else:
-        return random_gen.randrange (n)
+    return -1 if n == 0 else random_gen.randrange (n)
 
-def get_random_directory_index ():
+def get_random_directory_index():
     n = len (directories)
-    if n == 0:
-        return -1
-    else:
-        return random_gen.randrange (n)
+    return -1 if n == 0 else random_gen.randrange (n)
 
-def get_random_filename ():
-    chars = []
-    for i in range (20):
-        chars.append ("abcdefghijklmnopqrstuvwxyz"[random_gen.randrange (26)])
-
+def get_random_filename():
+    chars = [
+        "abcdefghijklmnopqrstuvwxyz"[random_gen.randrange(26)]
+        for _ in range(20)
+    ]
     extension = extensions[random_gen.randrange (len (extensions))]
-    filename = "".join (chars) + extension
-    return filename
+    return "".join (chars) + extension
 
 def get_random_path ():
     return os.path.join (output_dir, get_random_filename ())
