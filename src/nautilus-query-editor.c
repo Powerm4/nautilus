@@ -169,7 +169,7 @@ real_update_search_information (SearchInfoData *search_info_data)
     else if (nautilus_localsearch_directory_is_single (editor->location))
     {
         adw_status_page_set_title (ADW_STATUS_PAGE (editor->status_page),
-                                   _("Subfolders Not in Search Locations"));
+                                   _("Limited Search in this Folder"));
         gtk_widget_set_visible (editor->search_info_button, TRUE);
         gtk_widget_set_visible (editor->search_settings_button, TRUE);
 
