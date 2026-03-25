@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
+#include <glycin.h>
 #include <gio/gunixmounts.h>
 #include <nautilus-extension.h>
 #include <string.h>
@@ -91,6 +92,9 @@ struct _NautilusPropertiesWidget
     GtkWidget *select_icon_button;
     GtkWidget *reset_icon_button;
     char *custom_icon_for_undo;
+    GCancellable *icon_cancellable;
+    /* Might be provided by glycin, see https://gitlab.gnome.org/GNOME/glycin/-/issues/278 */
+    GFile *icon_pending_location;
 
     GtkWidget *star_button;
     GtkWidget *popout_button;
@@ -444,8 +448,6 @@ static void update_group_row (AdwComboRow     *row,
                               PermissionsInfo *permissions_info);
 static void select_image_button_callback (GtkWidget                *widget,
                                           NautilusPropertiesWidget *self);
-static void set_icon (NautilusPropertiesWidget *self,
-                      const char               *icon_uri);
 static void refresh_extension_model_pages (NautilusPropertiesWidget *self);
 static gboolean is_root_directory (NautilusFile *file);
 static gboolean is_volume_properties (NautilusPropertiesWidget *self);
@@ -564,29 +566,6 @@ update_properties_widget_icon (NautilusPropertiesWidget *self)
     }
 }
 
-/* utility to test if a uri refers to a local image */
-static gboolean
-uri_is_local_image (const char *uri)
-{
-    g_autoptr (GdkPixbuf) pixbuf = NULL;
-    g_autofree char *image_path = NULL;
-
-    image_path = g_filename_from_uri (uri, NULL, NULL);
-    if (image_path == NULL)
-    {
-        return FALSE;
-    }
-
-    pixbuf = gdk_pixbuf_new_from_file (image_path, NULL);
-
-    if (pixbuf == NULL)
-    {
-        return FALSE;
-    }
-
-    return TRUE;
-}
-
 static void
 on_undo_icon_reset (NautilusPropertiesWidget *self)
 {
@@ -625,6 +604,67 @@ reset_icon (NautilusPropertiesWidget *self)
 }
 
 static void
+icon_loaded (GlyLoader                *loader,
+             GAsyncResult             *result,
+             NautilusPropertiesWidget *self)
+{
+    NautilusFile *file = get_file (self);
+    g_autoptr (GError) error = NULL;
+    g_autoptr (GFile) icon_location = g_steal_pointer (&self->icon_pending_location);
+    g_autoptr (GlyImage) image = gly_loader_load_finish (loader, result, &error);
+
+    gtk_stack_set_visible_child (self->icon_stack, self->icon_overlay);
+
+    if (error != NULL || file == NULL || nautilus_file_is_gone (file))
+    {
+        if (error != NULL && error->code != G_IO_ERROR_CANCELLED)
+        {
+            nautilus_show_ok_dialog (_("Cannot Use This File"),
+                                     _("You can only use local images as custom icons."),
+                                     GTK_WIDGET (self));
+        }
+
+        return;
+    }
+    g_return_if_fail (icon_location != NULL);
+
+    /* Store path in file metadata */
+    g_autoptr (GFile) file_location = nautilus_file_get_location (file);
+    g_autofree char *path = g_file_get_relative_path (file_location, icon_location);
+
+    if (path == NULL)
+    {
+        path = g_file_get_uri (icon_location);
+    }
+
+    nautilus_file_set_metadata (file, NAUTILUS_METADATA_KEY_CUSTOM_ICON, NULL, path);
+}
+
+static void
+set_icon (NautilusPropertiesWidget *self,
+          GFile                    *location)
+{
+    g_autoptr (GlyLoader) loader = gly_loader_new (location);
+
+    /* Get tested image location */
+    g_autoptr (GFile) icon_location = NULL;
+
+    g_object_get (loader, "file", &icon_location, NULL);
+    g_return_if_fail (icon_location != NULL);
+
+    if (self->icon_cancellable != NULL)
+    {
+        g_cancellable_cancel (self->icon_cancellable);
+        g_clear_object (&self->icon_cancellable);
+    }
+    self->icon_cancellable = g_cancellable_new ();
+    g_set_object (&self->icon_pending_location, location);
+
+    gtk_stack_set_visible_child_name (self->icon_stack, "loading");
+    gly_loader_load_async (loader, self->icon_cancellable, (GAsyncReadyCallback) icon_loaded, self);
+}
+
+static void
 nautilus_properties_widget_drag_drop_cb (GtkDropTarget *target,
                                          const GValue  *value,
                                          gdouble        x,
@@ -656,26 +696,17 @@ nautilus_properties_widget_drag_drop_cb (GtkDropTarget *target,
     }
     else
     {
-        g_autofree gchar *uri = g_file_get_uri (file_list->data);
+        GFile *dropped_file = file_list->data;
 
-        if (uri_is_local_image (uri))
+        if (g_file_has_uri_scheme (dropped_file, SCHEME_LOCAL))
         {
-            set_icon (self, uri);
+            set_icon (self, dropped_file);
         }
         else
         {
-            if (!g_file_is_native (file_list->data))
-            {
-                nautilus_show_ok_dialog (_("The file that you dropped is not local."),
-                                         _("You can only use local images as custom icons."),
-                                         GTK_WIDGET (window));
-            }
-            else
-            {
-                nautilus_show_ok_dialog (_("The file that you dropped is not an image."),
-                                         _("You can only use local images as custom icons."),
-                                         GTK_WIDGET (window));
-            }
+            nautilus_show_ok_dialog (_("The file that you dropped is not local."),
+                                     _("You can only use local images as custom icons."),
+                                     GTK_WIDGET (window));
         }
     }
 }
@@ -3810,6 +3841,8 @@ real_dispose (GObject *object)
     unschedule_or_cancel_group_change (self);
     unschedule_or_cancel_owner_change (self);
 
+    g_clear_object (&self->icon_cancellable);
+    g_clear_object (&self->icon_pending_location);
     g_clear_pointer (&self->custom_icon_for_undo, g_free);
     g_clear_pointer (&self->handle, nautilus_file_list_cancel_call_when_ready);
 
@@ -3856,40 +3889,6 @@ real_finalize (GObject *object)
     G_OBJECT_CLASS (nautilus_properties_widget_parent_class)->finalize (object);
 }
 
-/* icon selection callback to set the image of the file object to the selected file */
-static void
-set_icon (NautilusPropertiesWidget *self,
-          const char               *icon_uri)
-{
-    g_autofree gchar *icon_path = NULL;
-
-    g_assert (icon_uri != NULL);
-    g_assert (NAUTILUS_IS_PROPERTIES_WIDGET (self));
-
-    icon_path = g_filename_from_uri (icon_uri, NULL, NULL);
-    /* we don't allow remote URIs */
-    if (icon_path != NULL)
-    {
-        NautilusFile *file = get_file (self);
-
-        if (file != NULL && !nautilus_file_is_gone (file))
-        {
-            g_autoptr (GFile) file_location = nautilus_file_get_location (file);
-            g_autoptr (GFile) icon_location = g_file_new_for_uri (icon_uri);
-            /* ’Tis a little bit of a misnomer. Actually a path. */
-            g_autofree gchar *real_icon_uri = g_file_get_relative_path (file_location,
-                                                                        icon_location);
-
-            if (real_icon_uri == NULL)
-            {
-                real_icon_uri = g_strdup (icon_uri);
-            }
-
-            nautilus_file_set_metadata (file, NAUTILUS_METADATA_KEY_CUSTOM_ICON, NULL, real_icon_uri);
-        }
-    }
-}
-
 static void
 custom_icon_file_chooser_response_cb (GtkFileDialog            *dialog,
                                       GAsyncResult             *result,
@@ -3900,8 +3899,7 @@ custom_icon_file_chooser_response_cb (GtkFileDialog            *dialog,
 
     if (location != NULL)
     {
-        g_autofree gchar *uri = g_file_get_uri (location);
-        set_icon (self, uri);
+        set_icon (self, location);
     }
     else if (error != NULL &&
              !g_error_matches (error, GTK_DIALOG_ERROR, GTK_DIALOG_ERROR_DISMISSED))
