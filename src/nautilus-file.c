@@ -4562,9 +4562,17 @@ strv_to_glist (GStrv strv)
 static GList *
 get_automatic_emblem_keywords (NautilusFile *file)
 {
-    /* Prepend in reverse order. */
     GList *keywords = NULL;
 
+    if (nautilus_file_is_symbolic_link (file))
+    {
+        keywords = g_list_prepend (keywords, NAUTILUS_FILE_EMBLEM_NAME_SYMBOLIC_LINK);
+    }
+
+    if (!nautilus_file_can_read (file))
+    {
+        keywords = g_list_prepend (keywords, NAUTILUS_FILE_EMBLEM_NAME_CANT_READ);
+    }
     /* Trash files are assumed to be read-only, so we want to ignore them here. */
     if (!nautilus_file_can_write (file) && !nautilus_file_is_in_trash (file))
     {
@@ -4574,14 +4582,6 @@ get_automatic_emblem_keywords (NautilusFile *file)
         {
             keywords = g_list_prepend (keywords, NAUTILUS_FILE_EMBLEM_NAME_CANT_WRITE);
         }
-    }
-    if (!nautilus_file_can_read (file))
-    {
-        keywords = g_list_prepend (keywords, NAUTILUS_FILE_EMBLEM_NAME_CANT_READ);
-    }
-    if (nautilus_file_is_symbolic_link (file))
-    {
-        keywords = g_list_prepend (keywords, NAUTILUS_FILE_EMBLEM_NAME_SYMBOLIC_LINK);
     }
 
     return keywords;
