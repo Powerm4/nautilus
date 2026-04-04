@@ -134,7 +134,8 @@
         "-Ddesktop_docs=false",
         "-Dlegacy_library=false",
         "-Dsystemd=disabled",
-        "-Dudev=disabled"
+        "-Dudev=disabled",
+        "-Dqr=disabled"
       ],
       "sources": [
         {
