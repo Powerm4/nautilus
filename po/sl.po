@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nautilus master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/nautilus/issues\n"
-"POT-Creation-Date: 2026-03-27 10:31+0000\n"
-"PO-Revision-Date: 2026-03-29 17:57+0200\n"
+"POT-Creation-Date: 2026-04-03 15:18+0000\n"
+"PO-Revision-Date: 2026-04-04 10:23+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -426,11 +426,11 @@ msgstr ""
 "programov. Podpira tri poglede; ikonski, seznamski in drevesni. Vse funkcije "
 "je mogoče razširiti s vstavki in skripti."
 
-#: data/org.gnome.Nautilus.metainfo.xml.in.in:58 src/nautilus-files-view.c:9704
+#: data/org.gnome.Nautilus.metainfo.xml.in.in:58 src/nautilus-files-view.c:9705
 msgid "Grid View"
 msgstr "Mrežni pogled"
 
-#: data/org.gnome.Nautilus.metainfo.xml.in.in:62 src/nautilus-files-view.c:9715
+#: data/org.gnome.Nautilus.metainfo.xml.in.in:62 src/nautilus-files-view.c:9716
 msgid "List View"
 msgstr "Seznamski pogled"
 
@@ -1043,7 +1043,7 @@ msgstr "Vrsta datoteke."
 
 #. Translators: This refers to a date time
 #: src/nautilus-column-utilities.c:90
-#: src/resources/ui/nautilus-properties-widget.blp:447
+#: src/resources/ui/nautilus-properties-widget.blp:455
 #: src/resources/ui/nautilus-search-popover.blp:190
 msgid "Modified"
 msgstr "Datum spremembe"
@@ -1061,7 +1061,7 @@ msgid "The detailed type of the file."
 msgstr "Podroben opis vrste datoteke."
 
 #: src/nautilus-column-utilities.c:106
-#: src/resources/ui/nautilus-properties-widget.blp:433
+#: src/resources/ui/nautilus-properties-widget.blp:441
 msgid "Accessed"
 msgstr "Zadnji dostop"
 
@@ -1071,7 +1071,7 @@ msgstr "Datum zadnjega dostopa do datoteke."
 
 #. Translators: This refers to a date time
 #: src/nautilus-column-utilities.c:115
-#: src/resources/ui/nautilus-properties-widget.blp:461
+#: src/resources/ui/nautilus-properties-widget.blp:469
 #: src/resources/ui/nautilus-search-popover.blp:197
 msgid "Created"
 msgstr "Ustvarjeno"
@@ -1120,7 +1120,7 @@ msgid "Shows if file is starred."
 msgstr "Pokaži, ali je datoteka označena z zvezdico."
 
 #: src/nautilus-column-utilities.c:205
-#: src/resources/ui/nautilus-properties-widget.blp:416
+#: src/resources/ui/nautilus-properties-widget.blp:424
 msgid "Trashed On"
 msgstr "Premaknjeno v smeti na"
 
@@ -1475,7 +1475,7 @@ msgstr[1] "%'u datoteka"
 msgstr[2] "%'u datoteki"
 msgstr[3] "%'u datoteke"
 
-#: src/nautilus-file.c:6322 src/nautilus-properties.c:2101
+#: src/nautilus-file.c:6322 src/nautilus-properties.c:2132
 #, c-format
 msgid "%s byte"
 msgid_plural "%s bytes"
@@ -1658,7 +1658,7 @@ msgstr[1] "%'d ura"
 msgstr[2] "%'d uri"
 msgstr[3] "%'d ure"
 
-#: src/nautilus-file-operations.c:475 src/nautilus-properties.c:908
+#: src/nautilus-file-operations.c:475 src/nautilus-properties.c:939
 msgid "unknown"
 msgstr "neznano"
 
@@ -1860,7 +1860,7 @@ msgid "Deleting Files"
 msgstr "Brisanje datotek"
 
 #. Translators: %s is a file name formatted for display
-#: src/nautilus-file-operations.c:2139 src/nautilus-files-view.c:6561
+#: src/nautilus-file-operations.c:2139 src/nautilus-files-view.c:6562
 #: src/nautilus-sidebar.c:2364 src/nautilus-sidebar.c:2393
 #, c-format
 msgid "Unable to eject “%s”"
@@ -1895,7 +1895,7 @@ msgid "_Empty"
 msgstr "_Izprazni"
 
 #. Translators: %s is a file name formatted for display
-#: src/nautilus-file-operations.c:2424 src/nautilus-files-view.c:6514
+#: src/nautilus-file-operations.c:2424 src/nautilus-files-view.c:6515
 #: src/nautilus-sidebar.c:1779
 #, c-format
 msgid "Unable to access “%s”"
@@ -3393,46 +3393,46 @@ msgstr "Vnesite naslov, da vzpostavite povezavo z omrežnim mestom."
 msgid "Folder is Empty"
 msgstr "Mapa je prazna."
 
-#: src/nautilus-files-view.c:5785
+#: src/nautilus-files-view.c:5786
 msgid "Select Move Destination"
 msgstr "Izbor ciljnega mesta za premikanje"
 
-#: src/nautilus-files-view.c:5789
+#: src/nautilus-files-view.c:5790
 msgid "Select Copy Destination"
 msgstr "Izbor ciljnega mesta za kopiranje"
 
-#: src/nautilus-files-view.c:5800 src/nautilus-files-view.c:6165
-#: src/nautilus-portal.c:477 src/nautilus-properties.c:3922
+#: src/nautilus-files-view.c:5801 src/nautilus-files-view.c:6166
+#: src/nautilus-portal.c:477 src/nautilus-properties.c:3921
 #: src/resources/ui/nautilus-files-view-select-items.blp:24
 msgid "_Select"
 msgstr "_Izberi"
 
-#: src/nautilus-files-view.c:6164
+#: src/nautilus-files-view.c:6165
 msgid "Select Extract Destination"
 msgstr "Izbor ciljnega mesta za razširjanje"
 
-#: src/nautilus-files-view.c:6240
+#: src/nautilus-files-view.c:6241
 msgid "Error sending email."
 msgstr "Napaka med pošiljanjem sporočila."
 
 #. Translators: %s is a file name formatted for display
-#: src/nautilus-files-view.c:6539
+#: src/nautilus-files-view.c:6540
 #, c-format
 msgid "Unable to remove “%s”"
 msgstr "Ni mogoče odstraniti »%s«"
 
-#: src/nautilus-files-view.c:6582
+#: src/nautilus-files-view.c:6583
 msgid "Unable to stop drive"
 msgstr "Ni mogoče zaustaviti pogona"
 
 #. Translators: %s is a file name formatted for display
-#: src/nautilus-files-view.c:6692 src/nautilus-sidebar.c:1730
+#: src/nautilus-files-view.c:6693 src/nautilus-sidebar.c:1730
 #: src/nautilus-sidebar.c:2608
 #, c-format
 msgid "Unable to start “%s”"
 msgstr "Ni mogoče začeti »%s«"
 
-#: src/nautilus-files-view.c:7793
+#: src/nautilus-files-view.c:7794
 #, c-format
 msgid "New Folder with Selection (%'d Item)"
 msgid_plural "New Folder with Selection (%'d Items)"
@@ -3441,71 +3441,71 @@ msgstr[1] "Nova mapa z izborom (%'d predmet)"
 msgstr[2] "Nova mapa z izborom (%'d predmeta)"
 msgstr[3] "Nova mapa z izborom (%'d predmeti)"
 
-#: src/nautilus-files-view.c:7848
+#: src/nautilus-files-view.c:7849
 #, c-format
 msgid "Open With %s"
 msgstr "Odpri s programom %s"
 
-#: src/nautilus-files-view.c:7859
+#: src/nautilus-files-view.c:7860
 msgid "Run"
 msgstr "Zaženi"
 
-#: src/nautilus-files-view.c:7864
+#: src/nautilus-files-view.c:7865
 #: src/resources/ui/nautilus-operations-ui-manager-request-passphrase.blp:17
 msgid "Extract"
 msgstr "Razširi"
 
-#: src/nautilus-files-view.c:7865
+#: src/nautilus-files-view.c:7866
 msgid "Extract to…"
 msgstr "Razširi v …"
 
-#: src/nautilus-files-view.c:7869
+#: src/nautilus-files-view.c:7870
 #: src/resources/menu/nautilus-files-view-context-menus.ui:98
 msgid "Open"
 msgstr "Odpri"
 
-#: src/nautilus-files-view.c:7948 src/nautilus-sidebar.c:3054
+#: src/nautilus-files-view.c:7949 src/nautilus-sidebar.c:3054
 #: src/resources/menu/nautilus-files-view-context-menus.ui:164
 msgid "_Start"
 msgstr "_Zaženi"
 
-#: src/nautilus-files-view.c:7954
+#: src/nautilus-files-view.c:7955
 msgid "_Connect"
 msgstr "_Poveži se"
 
-#: src/nautilus-files-view.c:7960
+#: src/nautilus-files-view.c:7961
 msgid "_Start Multi-disk Drive"
 msgstr "_Zaženi več-diskovni pogon"
 
-#: src/nautilus-files-view.c:7966
+#: src/nautilus-files-view.c:7967
 msgid "U_nlock Drive"
 msgstr "_Odkleni pogon"
 
-#: src/nautilus-files-view.c:7984
+#: src/nautilus-files-view.c:7985
 msgid "Stop Drive"
 msgstr "Zaustavi pogon"
 
-#: src/nautilus-files-view.c:7990 src/nautilus-sidebar.c:3085
+#: src/nautilus-files-view.c:7991 src/nautilus-sidebar.c:3085
 msgid "_Safely Remove Drive"
 msgstr "_Varno odstrani pogon"
 
-#: src/nautilus-files-view.c:7996
+#: src/nautilus-files-view.c:7997
 msgid "_Disconnect"
 msgstr "_Prekini povezavo"
 
-#: src/nautilus-files-view.c:8002
+#: src/nautilus-files-view.c:8003
 msgid "_Stop Multi-disk Drive"
 msgstr "_Zaustavi več-diskovni pogon"
 
-#: src/nautilus-files-view.c:8008
+#: src/nautilus-files-view.c:8009
 msgid "_Lock Drive"
 msgstr "_Zakleni pogon"
 
-#: src/nautilus-files-view.c:9702
+#: src/nautilus-files-view.c:9703
 msgid "View items as a grid of icons"
 msgstr "Prikaz elementov v mreži ikon"
 
-#: src/nautilus-files-view.c:9713
+#: src/nautilus-files-view.c:9714
 msgid "View items as a list"
 msgstr "Prikaz elementov v seznamu"
 
@@ -3539,7 +3539,7 @@ msgstr "Pogled trenutnega mesta"
 
 #. Translators: this refers to captions under icons.
 #. Translators: this is referred to the permissions the user has in a directory.
-#: src/nautilus-grid-view-captions-dialog.c:36 src/nautilus-properties.c:404
+#: src/nautilus-grid-view-captions-dialog.c:36 src/nautilus-properties.c:408
 msgid "None"
 msgstr "Brez"
 
@@ -3927,7 +3927,7 @@ msgid "Another file with the same name already exists in “%s”."
 msgstr "Datoteka z enakim imenom v »%s« že obstaja?."
 
 #: src/nautilus-operations-ui-manager.c:282
-#: src/resources/ui/nautilus-properties-widget.blp:405
+#: src/resources/ui/nautilus-properties-widget.blp:413
 msgid "Original Folder"
 msgstr "Izvorna mapa"
 
@@ -3997,7 +3997,7 @@ msgstr "Meni trenutne mape"
 
 #. Translators: This is the label used in the pathbar when seeing
 #. * the root directory (also known as /)
-#: src/nautilus-pathbar.c:406 src/nautilus-properties.c:855
+#: src/nautilus-pathbar.c:406 src/nautilus-properties.c:886
 msgid "Operating System"
 msgstr "Operacijski sistem"
 
@@ -4094,83 +4094,83 @@ msgstr[3] "%'d dejavna datotečna opravila"
 msgid "All file operations have been completed"
 msgstr "Vsa opravila datotek so uspešno končana"
 
-#: src/nautilus-properties.c:355
+#: src/nautilus-properties.c:359
 msgid "Read and Write"
 msgstr "Branje in zapisovanje"
 
-#: src/nautilus-properties.c:359
+#: src/nautilus-properties.c:363
 msgid "Create and Delete Files"
 msgstr "Ustvarjanje in brisanje datotek"
 
-#: src/nautilus-properties.c:363
+#: src/nautilus-properties.c:367
 msgid "Read and Write, No Access"
 msgstr "Branje in pisanje, ni dostopa"
 
-#: src/nautilus-properties.c:370
+#: src/nautilus-properties.c:374
 msgid "Read-Only"
 msgstr "Le za branje"
 
-#: src/nautilus-properties.c:374
+#: src/nautilus-properties.c:378
 msgid "Access Files"
 msgstr "Dostop do datotek"
 
-#: src/nautilus-properties.c:378
+#: src/nautilus-properties.c:382
 msgid "List Files Only"
 msgstr "Le izpis imen datotek"
 
-#: src/nautilus-properties.c:388
+#: src/nautilus-properties.c:392
 msgid "Write-Only"
 msgstr "Le za zapisovanje"
 
-#: src/nautilus-properties.c:392
+#: src/nautilus-properties.c:396
 msgid "Write-Only, No Access"
 msgstr "Le za zapisovanje, ni dostopa"
 
-#: src/nautilus-properties.c:399
+#: src/nautilus-properties.c:403
 msgid "Access-Only"
 msgstr "Le dostop"
 
-#: src/nautilus-properties.c:621
+#: src/nautilus-properties.c:600
 msgid "Custom icon removed"
 msgstr "Ikona po meri je odstranjena"
 
-#: src/nautilus-properties.c:622 src/nautilus-window.c:813
+#: src/nautilus-properties.c:601 src/nautilus-window.c:813
 #: src/resources/ui/nautilus-window.blp:25
 msgid "_Undo"
 msgstr "_Razveljavi"
 
-#: src/nautilus-properties.c:653
-msgid "You cannot assign more than one custom icon at a time!"
-msgstr "Hkrati ni mogoče dodeliti več kot ene ikone po meri!"
+#: src/nautilus-properties.c:622
+msgid "Cannot Use This File"
+msgstr "Te datoteke ni možno uporabiti"
 
-#: src/nautilus-properties.c:654
-msgid "Please drop just one image to set a custom icon."
-msgstr "Povlecite le eno sliko za nastavitev ikone po meri."
-
-#: src/nautilus-properties.c:669
-msgid "The file that you dropped is not local."
-msgstr "Spuščena datoteka ni krajevna."
-
-#: src/nautilus-properties.c:670 src/nautilus-properties.c:676
+#: src/nautilus-properties.c:623 src/nautilus-properties.c:708
 msgid "You can only use local images as custom icons."
 msgstr "Za ikone po meri lahko uporabljate le krajevne slike."
 
-#: src/nautilus-properties.c:675
-msgid "The file that you dropped is not an image."
-msgstr "Spuščena datoteka ni slika."
+#: src/nautilus-properties.c:693
+msgid "You cannot assign more than one custom icon at a time!"
+msgstr "Hkrati ni mogoče dodeliti več kot ene ikone po meri!"
+
+#: src/nautilus-properties.c:694
+msgid "Please drop just one image to set a custom icon."
+msgstr "Povlecite le eno sliko za nastavitev ikone po meri."
+
+#: src/nautilus-properties.c:707
+msgid "The file that you dropped is not local."
+msgstr "Spuščena datoteka ni krajevna."
 
 #. Unmarks a file as starred (starred)
-#: src/nautilus-properties.c:724 src/nautilus-star-cell.c:72
+#: src/nautilus-properties.c:755 src/nautilus-star-cell.c:72
 #: src/resources/menu/nautilus-files-view-context-menus.ui:261
 msgid "Unstar"
 msgstr "Odstrani zvezdico"
 
-#: src/nautilus-properties.c:724 src/nautilus-star-cell.c:72
+#: src/nautilus-properties.c:755 src/nautilus-star-cell.c:72
 msgctxt "Verb"
 msgid "Star"
 msgstr "Daj zvezdico"
 
-#: src/nautilus-properties.c:820
+#: src/nautilus-properties.c:851
 #, c-format
 msgid "%d Selected Item"
 msgid_plural "%d Selected Items"
@@ -4179,27 +4179,27 @@ msgstr[1] "%d izbrani predmet"
 msgstr[2] "%d izbrana predmeta"
 msgstr[3] "%d izbrane predmete"
 
-#: src/nautilus-properties.c:1590
+#: src/nautilus-properties.c:1621
 msgid "Cancel Group Change?"
 msgstr "Preklic spremembe skupine?"
 
-#: src/nautilus-properties.c:1737
+#: src/nautilus-properties.c:1768
 msgid "Cancel Owner Change?"
 msgstr "Preklic spremembe lastnika?"
 
-#: src/nautilus-properties.c:1887 src/nautilus-properties.c:1934
+#: src/nautilus-properties.c:1918 src/nautilus-properties.c:1965
 msgid "Multiple"
 msgstr "Zaporedno"
 
-#: src/nautilus-properties.c:2068
+#: src/nautilus-properties.c:2099
 msgid "Empty folder"
 msgstr "Prazna mapa"
 
-#: src/nautilus-properties.c:2072
+#: src/nautilus-properties.c:2103
 msgid "Contents unreadable"
 msgstr "Vsebina ni berljiva"
 
-#: src/nautilus-properties.c:2084
+#: src/nautilus-properties.c:2115
 #, c-format
 msgid "%'d item, with size %s"
 msgid_plural "%'d items, totalling %s"
@@ -4208,22 +4208,22 @@ msgstr[1] "%'d predmet velikosti %s"
 msgstr[2] "%'d predmeta velikosti %s"
 msgstr[3] "%'d predmeti velikosti %s"
 
-#: src/nautilus-properties.c:2094
+#: src/nautilus-properties.c:2125
 msgid "(some contents unreadable)"
 msgstr "(nekaj vsebine ni berljive)"
 
 #. Translators: %s will be filled with a filesystem type, such as 'ext4' or 'msdos'.
-#: src/nautilus-properties.c:2426
+#: src/nautilus-properties.c:2457
 #, c-format
 msgid "%s Filesystem"
 msgstr "Datotečni sistem %s"
 
-#: src/nautilus-properties.c:3532
+#: src/nautilus-properties.c:3563
 #, c-format
 msgid "The permissions of “%s” could not be determined."
 msgstr "Dovoljenj za »%s« ni mogoče določiti."
 
-#: src/nautilus-properties.c:3921
+#: src/nautilus-properties.c:3920
 msgid "Select Custom Icon"
 msgstr "Izberi ikono po meri"
 
@@ -5357,112 +5357,112 @@ msgstr "_Podrobno"
 msgid "Show File Operations"
 msgstr "Pokaži opravila datotek"
 
-#: src/resources/ui/nautilus-properties-widget.blp:122
+#: src/resources/ui/nautilus-properties-widget.blp:130
 msgid "Set Custom Icon"
 msgstr "Nastavi ikono po meri"
 
-#: src/resources/ui/nautilus-properties-widget.blp:144
+#: src/resources/ui/nautilus-properties-widget.blp:152
 msgid "Remove Custom Icon"
 msgstr "Odstrani ikono po meri"
 
-#: src/resources/ui/nautilus-properties-widget.blp:185
+#: src/resources/ui/nautilus-properties-widget.blp:193
 msgid "Unknown Filesystem"
 msgstr "Neznana vrsta datotečnega sistema"
 
-#: src/resources/ui/nautilus-properties-widget.blp:263
+#: src/resources/ui/nautilus-properties-widget.blp:271
 msgid "total"
 msgstr "skupaj"
 
 #. Translators: Refers to the capacity of the filesystem
-#: src/resources/ui/nautilus-properties-widget.blp:292
+#: src/resources/ui/nautilus-properties-widget.blp:300
 msgid "used"
 msgstr "uporabljeno"
 
 #. Translators: Refers to the capacity of the filesystem
-#: src/resources/ui/nautilus-properties-widget.blp:322
+#: src/resources/ui/nautilus-properties-widget.blp:330
 msgid "free"
 msgstr "prosto"
 
 #. Translators: Disks refers to GNOME Disks.
-#: src/resources/ui/nautilus-properties-widget.blp:336
+#: src/resources/ui/nautilus-properties-widget.blp:344
 msgid "_Open in Disks"
 msgstr "_Odpri s programom Diski"
 
-#: src/resources/ui/nautilus-properties-widget.blp:347
+#: src/resources/ui/nautilus-properties-widget.blp:355
 msgid "_Link Target"
 msgstr "_Cilj povezave"
 
-#: src/resources/ui/nautilus-properties-widget.blp:362
+#: src/resources/ui/nautilus-properties-widget.blp:370
 msgid "Open the Target's Location"
 msgstr "Odpri ciljno mesto"
 
-#: src/resources/ui/nautilus-properties-widget.blp:374
+#: src/resources/ui/nautilus-properties-widget.blp:382
 msgid "Parent _Folder"
 msgstr "_Nadrejena mapa"
 
-#: src/resources/ui/nautilus-properties-widget.blp:389
+#: src/resources/ui/nautilus-properties-widget.blp:397
 msgid "Open Parent Folder"
 msgstr "Odpri nadrejeno mapo"
 
-#: src/resources/ui/nautilus-properties-widget.blp:479
+#: src/resources/ui/nautilus-properties-widget.blp:487
 msgid "_Permissions"
 msgstr "_Dovoljenja"
 
-#: src/resources/ui/nautilus-properties-widget.blp:499
+#: src/resources/ui/nautilus-properties-widget.blp:507
 msgid "_Executable as Program"
 msgstr "_Izvedljivo kot program"
 
-#: src/resources/ui/nautilus-properties-widget.blp:521
+#: src/resources/ui/nautilus-properties-widget.blp:529
 msgid "Set Custom Permissions"
 msgstr "Nastavi dovoljenje po meri"
 
-#: src/resources/ui/nautilus-properties-widget.blp:533
+#: src/resources/ui/nautilus-properties-widget.blp:541
 msgid "Unknown Permissions"
 msgstr "Neznana dovoljenja"
 
-#: src/resources/ui/nautilus-properties-widget.blp:534
+#: src/resources/ui/nautilus-properties-widget.blp:542
 msgid "The permissions of the selected files could not be determined"
 msgstr "Dovoljenj za izbrane datoteke ni mogoče določiti."
 
-#: src/resources/ui/nautilus-properties-widget.blp:545
+#: src/resources/ui/nautilus-properties-widget.blp:553
 msgid "Only the owner can edit these permissions"
 msgstr "Ta dovoljenja lahko ureja samo lastnik"
 
-#: src/resources/ui/nautilus-properties-widget.blp:552
+#: src/resources/ui/nautilus-properties-widget.blp:560
 msgid "_Owner"
 msgstr "_Lastnik"
 
-#: src/resources/ui/nautilus-properties-widget.blp:561
-#: src/resources/ui/nautilus-properties-widget.blp:593
-#: src/resources/ui/nautilus-properties-widget.blp:618
+#: src/resources/ui/nautilus-properties-widget.blp:569
+#: src/resources/ui/nautilus-properties-widget.blp:601
+#: src/resources/ui/nautilus-properties-widget.blp:626
 msgid "Access"
 msgstr "Dostop"
 
-#: src/resources/ui/nautilus-properties-widget.blp:568
-#: src/resources/ui/nautilus-properties-widget.blp:600
-#: src/resources/ui/nautilus-properties-widget.blp:625
+#: src/resources/ui/nautilus-properties-widget.blp:576
+#: src/resources/ui/nautilus-properties-widget.blp:608
+#: src/resources/ui/nautilus-properties-widget.blp:633
 msgid "Folder Access"
 msgstr "Dostop do mape"
 
-#: src/resources/ui/nautilus-properties-widget.blp:575
-#: src/resources/ui/nautilus-properties-widget.blp:607
-#: src/resources/ui/nautilus-properties-widget.blp:632
+#: src/resources/ui/nautilus-properties-widget.blp:583
+#: src/resources/ui/nautilus-properties-widget.blp:615
+#: src/resources/ui/nautilus-properties-widget.blp:640
 msgid "File Access"
 msgstr "Dostop do datoteke"
 
-#: src/resources/ui/nautilus-properties-widget.blp:584
+#: src/resources/ui/nautilus-properties-widget.blp:592
 msgid "_Group"
 msgstr "_Skupina"
 
-#: src/resources/ui/nautilus-properties-widget.blp:613
+#: src/resources/ui/nautilus-properties-widget.blp:621
 msgid "Other Users"
 msgstr "Drugi uporabniki"
 
-#: src/resources/ui/nautilus-properties-widget.blp:641
+#: src/resources/ui/nautilus-properties-widget.blp:649
 msgid "Security Context"
 msgstr "Vsebinska varnost"
 
-#: src/resources/ui/nautilus-properties-widget.blp:657
+#: src/resources/ui/nautilus-properties-widget.blp:665
 msgid "Change Permissions for _Enclosed Files…"
 msgstr "Spremeni dovoljenja za _datoteke v mapi …"
 
