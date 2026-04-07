@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nautilus master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/nautilus/issues\n"
-"POT-Creation-Date: 2026-04-03 15:18+0000\n"
-"PO-Revision-Date: 2026-04-04 10:23+0200\n"
+"POT-Creation-Date: 2026-04-05 23:40+0000\n"
+"PO-Revision-Date: 2026-04-07 10:48+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -4249,8 +4249,8 @@ msgid "Folder Not in Search Locations"
 msgstr "Mapa ni na mestih iskanja"
 
 #: src/nautilus-query-editor.c:172
-msgid "Subfolders Not in Search Locations"
-msgstr "Podmape niso na mestih iskanja"
+msgid "Limited Search in this Folder"
+msgstr "Omejeno iskanje v tej mapi"
 
 #: src/nautilus-query-editor.c:181
 msgid "Some subfolders will not be included in search results"
