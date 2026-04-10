@@ -1731,8 +1731,6 @@ static void
 nautilus_window_slot_set_viewed_file (NautilusWindowSlot *self,
                                       NautilusFile       *file)
 {
-    NautilusFileAttributes attributes;
-
     if (self->viewed_file == file)
     {
         return;
@@ -1751,8 +1749,7 @@ nautilus_window_slot_set_viewed_file (NautilusWindowSlot *self,
 
     if (file != NULL)
     {
-        attributes = NAUTILUS_FILE_ATTRIBUTE_INFO;
-        nautilus_file_monitor_add (file, self, attributes);
+        nautilus_file_monitor_add (file, self, NAUTILUS_FILE_ATTRIBUTE_INFO);
 
         g_signal_connect_object (file, "changed",
                                  G_CALLBACK (viewed_file_changed_callback), self, 0);
