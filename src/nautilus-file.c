@@ -7815,40 +7815,36 @@ void
 nautilus_file_invalidate_attributes_internal (NautilusFile       *file,
                                               NautilusAttributes  attributes)
 {
-    Request request;
-
     if (file == NULL)
     {
         return;
     }
 
-    request = nautilus_directory_set_up_request (attributes);
-
-    if (REQUEST_WANTS_TYPE (request, REQUEST_DIRECTORY_COUNT))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT))
     {
         invalidate_directory_count (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_DEEP_COUNT))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_DEEP_COUNT))
     {
         invalidate_deep_counts (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_FILE_INFO))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_INFO))
     {
         invalidate_file_info (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_EXTENSION_INFO))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_EXTENSION_INFO))
     {
         nautilus_file_invalidate_extension_info_internal (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_THUMBNAIL_INFO))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO))
     {
         invalidate_thumbnail_info (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_THUMBNAIL_BUFFER))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER))
     {
         invalidate_thumbnail (file);
     }
-    if (REQUEST_WANTS_TYPE (request, REQUEST_MOUNT))
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_MOUNT))
     {
         invalidate_mount (file);
     }
