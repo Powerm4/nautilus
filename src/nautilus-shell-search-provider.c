@@ -646,7 +646,7 @@ handle_get_result_metas (NautilusShellSearchProvider2  *skeleton,
     }
 
     nautilus_file_list_call_when_ready (missing_files,
-                                        NAUTILUS_ATTRIBUTES_FOR_ICON,
+                                        NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER,
                                         &data->handle,
                                         result_list_attributes_ready_cb,
                                         data);

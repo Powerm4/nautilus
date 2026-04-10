@@ -82,7 +82,7 @@ main (int    argc,
     g_signal_connect (directory, "done-loading", G_CALLBACK (done_loading), NULL);
 
     attributes =
-        NAUTILUS_ATTRIBUTES_FOR_ICON |
+        NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER |
         NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
         NAUTILUS_ATTRIBUTE_INFO |
         NAUTILUS_ATTRIBUTE_MOUNT |

@@ -96,10 +96,6 @@ typedef void (*NautilusFileOperationCallback) (NautilusFile  *file,
 					       GError        *error,
 					       gpointer       callback_data);
 
-
-#define NAUTILUS_ATTRIBUTES_FOR_ICON      (NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO | \
-                                           NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER)
-
 typedef void NautilusFileListHandle;
 
 /* GObject requirements. */

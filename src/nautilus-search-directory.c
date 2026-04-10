@@ -459,7 +459,7 @@ search_call_when_ready (NautilusDirectory         *directory,
     search_callback->callback_data = callback_data;
     search_callback->wait_for_attributes = attributes;
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_FILE_LIST) &&
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_FILE_LIST) &&
         !self->search_ready_and_valid)
     {
         /* Add it to the pending callback list, which will be

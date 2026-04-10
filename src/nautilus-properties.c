@@ -3613,12 +3613,9 @@ setup_properties_widget (NautilusPropertiesWidget *self)
 {
     for (NautilusFileList *l = self->files; l != NULL; l = l->next)
     {
-        NautilusFile *file;
-        NautilusAttributes attributes;
+        NautilusFile *file = l->data;
+        NautilusAttributes attributes = NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER;
 
-        file = NAUTILUS_FILE (l->data);
-
-        attributes = NAUTILUS_ATTRIBUTES_FOR_ICON;
         if (nautilus_file_is_directory (file))
         {
             attributes |= NAUTILUS_ATTRIBUTE_DEEP_COUNT;
@@ -3698,7 +3695,7 @@ properties_widget_new (NautilusFileList *files)
 
     nautilus_file_list_call_when_ready (self->files,
                                         NAUTILUS_ATTRIBUTE_INFO |
-                                        NAUTILUS_ATTRIBUTES_FOR_ICON,
+                                        NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER,
                                         &self->handle,
                                         properties_files_are_ready,
                                         self);

@@ -412,8 +412,8 @@ copy_move_conflict_on_file_list_ready (GList    *files,
 
     set_replace_button_label (data);
 
-    nautilus_file_monitor_add (data->source, data, NAUTILUS_ATTRIBUTES_FOR_ICON);
-    nautilus_file_monitor_add (data->destination, data, NAUTILUS_ATTRIBUTES_FOR_ICON);
+    nautilus_file_monitor_add (data->source, data, NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER);
+    nautilus_file_monitor_add (data->destination, data, NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER);
 
     data->source_handler_id = g_signal_connect (data->source, "changed",
                                                 G_CALLBACK (file_icons_changed), data);
@@ -491,7 +491,8 @@ run_file_conflict_dialog (gpointer user_data)
     files = g_list_prepend (files, data->destination_directory_file);
 
     nautilus_file_list_call_when_ready (files,
-                                        NAUTILUS_ATTRIBUTES_FOR_ICON | NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT,
+                                        NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER |
+                                        NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT,
                                         &data->handle,
                                         data->on_file_list_ready,
                                         data);

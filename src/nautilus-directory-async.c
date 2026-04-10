@@ -644,51 +644,47 @@ nautilus_directory_set_up_request (NautilusAttributes attributes)
 
     request = 0;
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT) != 0)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT))
     {
         REQUEST_SET_TYPE (request, REQUEST_DIRECTORY_COUNT);
     }
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_DEEP_COUNT) != 0)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_DEEP_COUNT))
     {
         REQUEST_SET_TYPE (request, REQUEST_DEEP_COUNT);
     }
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_INFO) != 0)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_INFO))
     {
         REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_EXTENSION_INFO) != 0)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_EXTENSION_INFO))
     {
         REQUEST_SET_TYPE (request, REQUEST_EXTENSION_INFO);
     }
 
-    if ((attributes & NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO) != 0)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO))
     {
         REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_INFO);
-        REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (attributes & NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER))
     {
         REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_BUFFER);
-        REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_INFO);
-        REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (attributes & NAUTILUS_ATTRIBUTE_MOUNT)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_MOUNT))
     {
         REQUEST_SET_TYPE (request, REQUEST_MOUNT);
-        REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (attributes & NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO))
     {
         REQUEST_SET_TYPE (request, REQUEST_FILESYSTEM_INFO);
     }
 
-    if (attributes & NAUTILUS_ATTRIBUTE_FILE_LIST)
+    if (IS_ATTRIBUTE_SET (attributes, NAUTILUS_ATTRIBUTE_FILE_LIST))
     {
         REQUEST_SET_TYPE (request, REQUEST_FILE_LIST);
     }

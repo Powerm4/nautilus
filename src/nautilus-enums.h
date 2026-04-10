@@ -62,13 +62,15 @@ typedef enum
 
 typedef enum
 {
+    /* Some attributes require others, which is done by ORing them */
+
     NAUTILUS_ATTRIBUTE_INFO                 = 1 << 0, /* All standard info */
     NAUTILUS_ATTRIBUTE_DEEP_COUNT           = 1 << 1,
     NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT = 1 << 2,
-    NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO       = 1 << 3,
+    NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO       = 1 << 3 | NAUTILUS_ATTRIBUTE_INFO,
     NAUTILUS_ATTRIBUTE_EXTENSION_INFO       = 1 << 4,
-    NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER     = 1 << 5,
-    NAUTILUS_ATTRIBUTE_MOUNT                = 1 << 6,
+    NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER     = 1 << 5 | NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO,
+    NAUTILUS_ATTRIBUTE_MOUNT                = 1 << 6 | NAUTILUS_ATTRIBUTE_INFO,
     NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO      = 1 << 7,
     NAUTILUS_ATTRIBUTE_FILE_LIST            = 1 << 8,
 } NautilusAttributes;
