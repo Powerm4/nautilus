@@ -2956,15 +2956,15 @@ add_directory_to_directory_list (NautilusFilesView  *view,
                                  GList             **directory_list,
                                  GCallback           changed_callback)
 {
-    NautilusFileAttributes attributes;
+    NautilusAttributes attributes;
 
     if (g_list_find (*directory_list, directory) == NULL)
     {
         nautilus_directory_ref (directory);
 
         attributes =
-            NAUTILUS_FILE_ATTRIBUTE_INFO |
-            NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT;
+            NAUTILUS_ATTRIBUTE_INFO |
+            NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT;
 
         nautilus_directory_file_monitor_add (directory, directory_list,
                                              FALSE, attributes,
@@ -4679,7 +4679,7 @@ void
 nautilus_files_view_add_subdirectory (NautilusFilesView *self,
                                       NautilusDirectory *directory)
 {
-    NautilusFileAttributes attributes;
+    NautilusAttributes attributes;
     g_autoptr (NautilusFile) file = nautilus_directory_get_corresponding_file (directory);
     NautilusViewItem *item = nautilus_view_model_get_item_for_file (self->model, file);
 
@@ -4688,10 +4688,10 @@ nautilus_files_view_add_subdirectory (NautilusFilesView *self,
     nautilus_directory_ref (directory);
 
     attributes =
-        NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
-        NAUTILUS_FILE_ATTRIBUTE_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-        NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO;
+        NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
+        NAUTILUS_ATTRIBUTE_INFO |
+        NAUTILUS_ATTRIBUTE_MOUNT |
+        NAUTILUS_ATTRIBUTE_EXTENSION_INFO;
 
     nautilus_directory_file_monitor_add (directory,
                                          &self->directory,
@@ -6502,7 +6502,7 @@ file_mount_callback (NautilusFile *file,
     g_autoptr (NautilusFilesView) self = NAUTILUS_FILES_VIEW (callback_data);
     NautilusViewItem *item = nautilus_view_model_get_item_for_file (self->model, file);
 
-    nautilus_file_invalidate_attributes (file, NAUTILUS_FILE_ATTRIBUTE_MOUNT);
+    nautilus_file_invalidate_attributes (file, NAUTILUS_ATTRIBUTE_MOUNT);
     nautilus_view_item_set_loading (item, FALSE);
 
     if (error != NULL &&
@@ -8465,7 +8465,7 @@ static void
 load_directory (NautilusFilesView *self,
                 NautilusDirectory *directory)
 {
-    NautilusFileAttributes attributes;
+    NautilusAttributes attributes;
 
     g_assert (NAUTILUS_IS_FILES_VIEW (self));
     g_assert (NAUTILUS_IS_DIRECTORY (directory));
@@ -8519,9 +8519,9 @@ load_directory (NautilusFilesView *self,
      * change the directory's file metadata.
      */
     attributes =
-        NAUTILUS_FILE_ATTRIBUTE_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-        NAUTILUS_FILE_ATTRIBUTE_FILESYSTEM_INFO;
+        NAUTILUS_ATTRIBUTE_INFO |
+        NAUTILUS_ATTRIBUTE_MOUNT |
+        NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO;
     self->metadata_for_directory_as_file_pending = TRUE;
     self->metadata_for_files_in_directory_pending = TRUE;
     nautilus_file_call_when_ready
@@ -8538,9 +8538,9 @@ load_directory (NautilusFilesView *self,
      * because of New Folder, and relative emblems.
      */
     attributes =
-        NAUTILUS_FILE_ATTRIBUTE_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_FILESYSTEM_INFO;
+        NAUTILUS_ATTRIBUTE_INFO |
+        NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO |
+        NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO;
     nautilus_file_monitor_add (self->directory_as_file,
                                &self->directory_as_file,
                                attributes);
@@ -8553,7 +8553,7 @@ load_directory (NautilusFilesView *self,
 static void
 finish_loading (NautilusFilesView *self)
 {
-    NautilusFileAttributes attributes;
+    NautilusAttributes attributes;
 
     emit_begin_loading (self);
 
@@ -8572,10 +8572,10 @@ finish_loading (NautilusFilesView *self)
      * and possible custom name.
      */
     attributes =
-        NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
-        NAUTILUS_FILE_ATTRIBUTE_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-        NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO;
+        NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
+        NAUTILUS_ATTRIBUTE_INFO |
+        NAUTILUS_ATTRIBUTE_MOUNT |
+        NAUTILUS_ATTRIBUTE_EXTENSION_INFO;
 
     self->files_added_handler_id = g_signal_connect
                                        (self->directory, "files-added",

@@ -592,8 +592,8 @@ real_pop_up_pathbar_context_menu (NautilusPathBar *self)
 }
 
 static void
-pathbar_popup_file_attributes_ready (NautilusFile *file,
-                                     gpointer      data)
+pathbar_popup_attributes_ready (NautilusFile *file,
+                                gpointer      data)
 {
     NautilusPathBar *self;
 
@@ -613,7 +613,7 @@ unschedule_pop_up_context_menu (NautilusPathBar *self)
     {
         g_return_if_fail (NAUTILUS_IS_FILE (self->context_menu_file));
         nautilus_file_cancel_call_when_ready (self->context_menu_file,
-                                              pathbar_popup_file_attributes_ready,
+                                              pathbar_popup_attributes_ready,
                                               self);
         g_clear_pointer (&self->context_menu_file, nautilus_file_unref);
     }
@@ -628,9 +628,9 @@ schedule_pop_up_context_menu (NautilusPathBar *self,
     if (file == self->context_menu_file)
     {
         if (nautilus_file_check_if_ready (file,
-                                          NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                          NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-                                          NAUTILUS_FILE_ATTRIBUTE_FILESYSTEM_INFO))
+                                          NAUTILUS_ATTRIBUTE_INFO |
+                                          NAUTILUS_ATTRIBUTE_MOUNT |
+                                          NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO))
         {
             real_pop_up_pathbar_context_menu (self);
         }
@@ -641,10 +641,10 @@ schedule_pop_up_context_menu (NautilusPathBar *self,
 
         self->context_menu_file = nautilus_file_ref (file);
         nautilus_file_call_when_ready (self->context_menu_file,
-                                       NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                       NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-                                       NAUTILUS_FILE_ATTRIBUTE_FILESYSTEM_INFO,
-                                       pathbar_popup_file_attributes_ready,
+                                       NAUTILUS_ATTRIBUTE_INFO |
+                                       NAUTILUS_ATTRIBUTE_MOUNT |
+                                       NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO,
+                                       pathbar_popup_attributes_ready,
                                        self);
     }
 }
@@ -1308,7 +1308,7 @@ make_button_data (NautilusPathBar *self,
     {
         button_data->file = nautilus_file_ref (file);
         nautilus_file_monitor_add (button_data->file, button_data,
-                                   NAUTILUS_FILE_ATTRIBUTES_FOR_ICON);
+                                   NAUTILUS_ATTRIBUTES_FOR_ICON);
         button_data->file_changed_signal_id =
             g_signal_connect (button_data->file, "changed",
                               G_CALLBACK (button_data_file_changed),

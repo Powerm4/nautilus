@@ -300,7 +300,7 @@ test_file_permissions_can_set (void)
 
     g_autoptr (NautilusFile) file = nautilus_file_get (location);
 
-    file_load_attributes (file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+    file_load_attributes (file, NAUTILUS_ATTRIBUTE_INFO);
     g_assert_true (nautilus_file_can_set_permissions (file));
 
     test_clear_tmp_dir ();
@@ -349,7 +349,7 @@ test_file_permissions_set_basic (void)
     gboolean file_changed = FALSE;
     guint32 perms = 0600;
 
-    file_load_attributes (file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+    file_load_attributes (file, NAUTILUS_ATTRIBUTE_INFO);
     g_signal_connect (file, "changed", G_CALLBACK (file_changed_set_cb), &file_changed);
 
     nautilus_file_set_permissions (file, perms, permissions_success_cb, &perm_data);
@@ -387,7 +387,7 @@ test_file_permissions_set_same (void)
     guint32 mode_before = g_file_info_get_attribute_uint32 (info_before, G_FILE_ATTRIBUTE_UNIX_MODE);
     PermissionTestData perm_data = { file, FALSE };
 
-    file_load_attributes (file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+    file_load_attributes (file, NAUTILUS_ATTRIBUTE_INFO);
     g_signal_connect (file, "changed", G_CALLBACK (file_changed_set_cb), &file_changed);
 
     nautilus_file_set_permissions (file, mode_before, permissions_success_cb, &perm_data);
@@ -430,9 +430,9 @@ test_directory_counts (void)
 
     file_hierarchy_create (deep_hierarchy, "");
     file_load_attributes (file,
-                          NAUTILUS_FILE_ATTRIBUTE_INFO |
-                          NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
-                          NAUTILUS_FILE_ATTRIBUTE_DEEP_COUNTS);
+                          NAUTILUS_ATTRIBUTE_INFO |
+                          NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
+                          NAUTILUS_ATTRIBUTE_DEEP_COUNT);
 
     g_assert_true (nautilus_file_get_directory_item_count (file, &item_count, &count_unreadable));
     g_assert_cmpint (item_count, ==, 3);

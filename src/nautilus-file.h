@@ -97,7 +97,8 @@ typedef void (*NautilusFileOperationCallback) (NautilusFile  *file,
 					       gpointer       callback_data);
 
 
-#define NAUTILUS_FILE_ATTRIBUTES_FOR_ICON (NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_INFO | NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_BUFFER)
+#define NAUTILUS_ATTRIBUTES_FOR_ICON      (NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO | \
+                                           NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER)
 
 typedef void NautilusFileListHandle;
 
@@ -124,7 +125,7 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC (NautilusFile, nautilus_file_unref)
 /* Monitor the file. */
 void                    nautilus_file_monitor_add                       (NautilusFile                   *file,
 									 gconstpointer                   client,
-									 NautilusFileAttributes          attributes);
+									 NautilusAttributes              attributes);
 void                    nautilus_file_monitor_remove                    (NautilusFile                   *file,
 									 gconstpointer                   client);
 
@@ -135,16 +136,16 @@ NautilusDirectory *     nautilus_file_get_directory                     (Nautilu
  * to other attributes as well.
  */
 void                    nautilus_file_call_when_ready                   (NautilusFile                   *file,
-									 NautilusFileAttributes          attributes,
+									 NautilusAttributes              attributes,
 									 NautilusFileCallback            callback,
 									 gpointer                        callback_data);
 void                    nautilus_file_cancel_call_when_ready            (NautilusFile                   *file,
 									 NautilusFileCallback            callback,
 									 gpointer                        callback_data);
 gboolean                nautilus_file_check_if_ready                    (NautilusFile                   *file,
-									 NautilusFileAttributes          attributes);
+									 NautilusAttributes              attributes);
 void                    nautilus_file_invalidate_attributes             (NautilusFile                   *file,
-									 NautilusFileAttributes          attributes);
+									 NautilusAttributes              attributes);
 void                    nautilus_file_invalidate_all_attributes         (NautilusFile                   *file);
 
 /* Basic attributes for file objects. */
@@ -435,7 +436,7 @@ void                    nautilus_file_list_free                         (GList  
 GList *                 nautilus_file_list_copy                         (GList                          *file_list);
 GList *			nautilus_file_list_sort_by_display_name		(GList				*file_list);
 void                    nautilus_file_list_call_when_ready              (GList                          *file_list,
-									 NautilusFileAttributes          attributes,
+									 NautilusAttributes              attributes,
 									 NautilusFileListHandle        **handle,
 									 NautilusFileListCallback        callback,
 									 gpointer                        callback_data);
@@ -488,18 +489,18 @@ typedef struct {
 	/* Virtual functions which MUST be implemented by subclasses */
 	void                  (* monitor_add)            (NautilusFile           *file,
 							  gconstpointer           client,
-							  NautilusFileAttributes  attributes);
+							  NautilusAttributes      attributes);
 	void                  (* monitor_remove)         (NautilusFile           *file,
 							  gconstpointer           client);
 	void                  (* call_when_ready)        (NautilusFile           *file,
-							  NautilusFileAttributes  attributes,
+							  NautilusAttributes      attributes,
 							  NautilusFileCallback    callback,
 							  gpointer                callback_data);
 	void                  (* cancel_call_when_ready) (NautilusFile           *file,
 							  NautilusFileCallback    callback,
 							  gpointer                callback_data);
 	gboolean              (* check_if_ready)         (NautilusFile           *file,
-							  NautilusFileAttributes  attributes);
+							  NautilusAttributes      attributes);
 
         /* Virtual functions which MAY be overridden by subclasses */
 	gboolean              (* get_item_count)         (NautilusFile           *file,

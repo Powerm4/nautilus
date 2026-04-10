@@ -40,7 +40,7 @@ struct _NautilusFavoriteDirectory
 typedef struct
 {
     gboolean monitor_hidden_files;
-    NautilusFileAttributes monitor_attributes;
+    NautilusAttributes monitor_attributes;
 
     gconstpointer client;
 } FavoriteMonitor;
@@ -198,7 +198,7 @@ real_is_editable (NautilusDirectory *directory)
 
 static void
 real_call_when_ready (NautilusDirectory         *directory,
-                      NautilusFileAttributes     file_attributes,
+                      NautilusAttributes         attributes,
                       gboolean                   wait_for_file_list,
                       NautilusDirectoryCallback  callback,
                       gpointer                   callback_data)
@@ -227,7 +227,7 @@ static void
 real_file_monitor_add (NautilusDirectory         *directory,
                        gconstpointer              client,
                        gboolean                   monitor_hidden_files,
-                       NautilusFileAttributes     file_attributes,
+                       NautilusAttributes         attributes,
                        NautilusDirectoryCallback  callback,
                        gpointer                   callback_data)
 {
@@ -240,7 +240,7 @@ real_file_monitor_add (NautilusDirectory         *directory,
 
     monitor = g_new0 (FavoriteMonitor, 1);
     monitor->monitor_hidden_files = monitor_hidden_files;
-    monitor->monitor_attributes = file_attributes;
+    monitor->monitor_attributes = attributes;
     monitor->client = client;
 
     starred->monitor_list = g_list_prepend (starred->monitor_list, monitor);
@@ -255,7 +255,7 @@ real_file_monitor_add (NautilusDirectory         *directory,
         file = list->data;
 
         /* Add monitors */
-        nautilus_file_monitor_add (file, monitor, file_attributes);
+        nautilus_file_monitor_add (file, monitor, attributes);
     }
 }
 

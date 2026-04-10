@@ -108,7 +108,7 @@ typedef struct
 	gboolean (* contains_file)       (NautilusDirectory         *directory,
 					  NautilusFile              *file);
 	void     (* call_when_ready)     (NautilusDirectory         *directory,
-					  NautilusFileAttributes     file_attributes,
+					  NautilusAttributes         attributes,
 					  gboolean                   wait_for_file_list,
 					  NautilusDirectoryCallback  callback,
 					  gpointer                   callback_data);
@@ -118,7 +118,7 @@ typedef struct
 	void     (* file_monitor_add)    (NautilusDirectory          *directory,
 					  gconstpointer              client,
 					  gboolean                   monitor_hidden_files,
-					  NautilusFileAttributes     monitor_attributes,
+					  NautilusAttributes         monitor_attributes,
 					  NautilusDirectoryCallback  initial_files_callback,
 					  gpointer                   callback_data);
 	void     (* file_monitor_remove) (NautilusDirectory         *directory,
@@ -188,7 +188,7 @@ NautilusFile *     nautilus_directory_get_corresponding_file   (NautilusDirector
  * The file attribute and metadata keys are for files in the directory.
  */
 void               nautilus_directory_call_when_ready          (NautilusDirectory         *directory,
-								NautilusFileAttributes     file_attributes,
+								NautilusAttributes         attributes,
 								gboolean                   wait_for_all_files,
 								NautilusDirectoryCallback  callback,
 								gpointer                   callback_data);
@@ -201,7 +201,7 @@ void               nautilus_directory_cancel_callback          (NautilusDirector
 void               nautilus_directory_file_monitor_add         (NautilusDirectory         *directory,
 								gconstpointer              client,
 								gboolean                   monitor_hidden_files,
-								NautilusFileAttributes     attributes,
+								NautilusAttributes         attributes,
 								NautilusDirectoryCallback  initial_files_callback,
 								gpointer                   callback_data);
 void               nautilus_directory_file_monitor_remove      (NautilusDirectory         *directory,

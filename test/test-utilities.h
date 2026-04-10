@@ -60,8 +60,8 @@ void create_fourth_hierarchy (gchar *prefix);
 
 void create_random_file (GFile *file,
                          gsize size);
-void file_load_attributes (NautilusFile           *file,
-                           NautilusFileAttributes  attributes);
+void file_load_attributes (NautilusFile       *file,
+                           NautilusAttributes  attributes);
 void make_image_file_full (GFile  *file,
                            guint8  color[4],
                            guint   width,

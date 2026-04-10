@@ -371,7 +371,7 @@ network_callback_find (NautilusNetworkDirectory  *self,
 
 static void
 real_call_when_ready (NautilusDirectory         *directory,
-                      NautilusFileAttributes     file_attributes,
+                      NautilusAttributes         attributes,
                       gboolean                   wait_for_file_list,
                       NautilusDirectoryCallback  callback,
                       gpointer                   callback_data)
@@ -394,11 +394,11 @@ real_call_when_ready (NautilusDirectory         *directory,
     self->callback_list = g_list_prepend (self->callback_list, network_callback);
 
     nautilus_directory_call_when_ready (self->computer_backend_directory,
-                                        file_attributes,
+                                        attributes,
                                         wait_for_file_list,
                                         on_backend_directory_ready, network_callback);
     nautilus_directory_call_when_ready (self->network_backend_directory,
-                                        file_attributes,
+                                        attributes,
                                         wait_for_file_list,
                                         on_backend_directory_ready, network_callback);
 }
@@ -436,7 +436,7 @@ static void
 real_file_monitor_add (NautilusDirectory         *directory,
                        gconstpointer              client,
                        gboolean                   monitor_hidden_files,
-                       NautilusFileAttributes     file_attributes,
+                       NautilusAttributes         attributes,
                        NautilusDirectoryCallback  callback,
                        gpointer                   callback_data)
 {
@@ -445,12 +445,12 @@ real_file_monitor_add (NautilusDirectory         *directory,
     nautilus_directory_file_monitor_add (self->computer_backend_directory,
                                          client,
                                          monitor_hidden_files,
-                                         file_attributes,
+                                         attributes,
                                          NULL, NULL);
     nautilus_directory_file_monitor_add (self->network_backend_directory,
                                          client,
                                          monitor_hidden_files,
-                                         file_attributes,
+                                         attributes,
                                          NULL, NULL);
 
     if (callback != NULL)

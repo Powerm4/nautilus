@@ -143,14 +143,14 @@ NautilusDirectory *nautilus_directory_get_existing                    (GFile    
 void               nautilus_directory_async_state_changed             (NautilusDirectory         *directory);
 void               nautilus_directory_call_when_ready_internal        (NautilusDirectory         *directory,
 								       NautilusFile              *file,
-								       NautilusFileAttributes     file_attributes,
+								       NautilusAttributes         attributes,
 								       gboolean                   wait_for_file_list,
 								       NautilusDirectoryCallback  directory_callback,
 								       NautilusFileCallback       file_callback,
 								       gpointer                   callback_data);
 gboolean           nautilus_directory_check_if_ready_internal         (NautilusDirectory         *directory,
 								       NautilusFile              *file,
-								       NautilusFileAttributes     file_attributes);
+								       NautilusAttributes         attributes);
 void               nautilus_directory_cancel_callback_internal        (NautilusDirectory         *directory,
 								       NautilusFile              *file,
 								       NautilusDirectoryCallback  directory_callback,
@@ -160,7 +160,7 @@ void               nautilus_directory_monitor_add_internal            (NautilusD
 								       NautilusFile              *file,
 								       gconstpointer              client,
 								       gboolean                   monitor_hidden_files,
-								       NautilusFileAttributes     attributes,
+								       NautilusAttributes         attributes,
 								       NautilusDirectoryCallback  callback,
 								       gpointer                   callback_data);
 void               nautilus_directory_monitor_remove_internal         (NautilusDirectory         *directory,
@@ -179,10 +179,10 @@ void               nautilus_directory_stop_monitoring_file_list       (NautilusD
 void               nautilus_directory_cancel                          (NautilusDirectory         *directory);
 void               nautilus_async_destroying_file                     (NautilusFile              *file);
 void               nautilus_directory_force_reload_internal           (NautilusDirectory         *directory,
-								       NautilusFileAttributes     file_attributes);
-void               nautilus_directory_cancel_loading_file_attributes  (NautilusDirectory         *directory,
+								       NautilusAttributes         attributes);
+void               nautilus_directory_cancel_loading_attributes       (NautilusDirectory         *directory,
 								       NautilusFile              *file,
-								       NautilusFileAttributes     file_attributes);
+								       NautilusAttributes         attributes);
 
 /* Calls shared between directory, file, and async. code. */
 void               nautilus_directory_emit_files_added                (NautilusDirectory         *directory,
@@ -197,7 +197,7 @@ void               nautilus_directory_emit_done_loading               (NautilusD
 void               nautilus_directory_emit_load_error                 (NautilusDirectory         *directory,
 								       GError                    *error);
 char *             nautilus_directory_get_name_for_self_as_new_file   (NautilusDirectory         *directory);
-Request            nautilus_directory_set_up_request                  (NautilusFileAttributes     file_attributes);
+Request            nautilus_directory_set_up_request                  (NautilusAttributes         attributes);
 
 /* Interface to the file list. */
 NautilusFile *     nautilus_directory_find_file_by_name               (NautilusDirectory         *directory,

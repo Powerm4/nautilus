@@ -245,7 +245,7 @@ nautilus_file_set_display_name (NautilusFile *file,
         {
             file->details->got_custom_display_name = FALSE;
             nautilus_file_invalidate_attributes (file,
-                                                 NAUTILUS_FILE_ATTRIBUTE_INFO);
+                                                 NAUTILUS_ATTRIBUTE_INFO);
         }
         return FALSE;
     }
@@ -2214,11 +2214,11 @@ real_batch_rename (GList                         *files,
 
         if (old_file != NULL)
         {
-            nautilus_file_invalidate_attributes (old_file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+            nautilus_file_invalidate_attributes (old_file, NAUTILUS_ATTRIBUTE_INFO);
         }
         if (new_file != NULL)
         {
-            nautilus_file_invalidate_attributes (new_file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+            nautilus_file_invalidate_attributes (new_file, NAUTILUS_ATTRIBUTE_INFO);
         }
     }
 
@@ -2230,11 +2230,11 @@ real_batch_rename (GList                         *files,
 
         if (old_file != NULL)
         {
-            nautilus_file_invalidate_attributes (old_file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+            nautilus_file_invalidate_attributes (old_file, NAUTILUS_ATTRIBUTE_INFO);
         }
         if (new_file != NULL)
         {
-            nautilus_file_invalidate_attributes (new_file, NAUTILUS_FILE_ATTRIBUTE_INFO);
+            nautilus_file_invalidate_attributes (new_file, NAUTILUS_ATTRIBUTE_INFO);
         }
     }
 
@@ -4271,9 +4271,9 @@ nautilus_file_get_edit_name (NautilusFile *file)
 }
 
 void
-nautilus_file_monitor_add (NautilusFile           *file,
-                           gconstpointer           client,
-                           NautilusFileAttributes  attributes)
+nautilus_file_monitor_add (NautilusFile       *file,
+                           gconstpointer       client,
+                           NautilusAttributes  attributes)
 {
     g_return_if_fail (NAUTILUS_IS_FILE (file));
     g_return_if_fail (client != NULL);
@@ -4817,8 +4817,8 @@ nautilus_file_get_thumbnail_icon (NautilusFile          *file,
     }
 
     if (file->details->thumbnail_cancellable != NULL ||
-        (nautilus_file_check_if_ready (file, NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_INFO) &&
-         !nautilus_file_check_if_ready (file, NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_BUFFER)))
+        (nautilus_file_check_if_ready (file, NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO) &&
+         !nautilus_file_check_if_ready (file, NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER)))
     {
         g_autoptr (GIcon) gicon = g_themed_icon_new (ICON_NAME_THUMBNAIL_LOADING);
 
@@ -7049,7 +7049,7 @@ file_mount_unmounted (GMount   *mount,
 
     file = NAUTILUS_FILE (data);
 
-    nautilus_file_invalidate_attributes (file, NAUTILUS_FILE_ATTRIBUTE_MOUNT);
+    nautilus_file_invalidate_attributes (file, NAUTILUS_ATTRIBUTE_MOUNT);
 }
 
 void
@@ -7706,13 +7706,13 @@ nautilus_file_is_not_yet_confirmed (NautilusFile *file)
  * obtain the information, which might be slow network calls, e.g.
  *
  * @file: The file being queried.
- * @file_attributes: A bit-mask with the desired information.
+ * @attributes: A bit-mask with the desired information.
  *
  * Return value: TRUE if all of the specified attributes are currently readable.
  */
 gboolean
-nautilus_file_check_if_ready (NautilusFile           *file,
-                              NautilusFileAttributes  file_attributes)
+nautilus_file_check_if_ready (NautilusFile       *file,
+                              NautilusAttributes  attributes)
 {
     /* To be parallel with call_when_ready, return
      * TRUE for NULL file.
@@ -7724,14 +7724,14 @@ nautilus_file_check_if_ready (NautilusFile           *file,
 
     g_return_val_if_fail (NAUTILUS_IS_FILE (file), FALSE);
 
-    return NAUTILUS_FILE_CLASS (G_OBJECT_GET_CLASS (file))->check_if_ready (file, file_attributes);
+    return NAUTILUS_FILE_CLASS (G_OBJECT_GET_CLASS (file))->check_if_ready (file, attributes);
 }
 
 void
-nautilus_file_call_when_ready (NautilusFile           *file,
-                               NautilusFileAttributes  file_attributes,
-                               NautilusFileCallback    callback,
-                               gpointer                callback_data)
+nautilus_file_call_when_ready (NautilusFile         *file,
+                               NautilusAttributes    attributes,
+                               NautilusFileCallback  callback,
+                               gpointer              callback_data)
 {
     if (file == NULL)
     {
@@ -7742,7 +7742,7 @@ nautilus_file_call_when_ready (NautilusFile           *file,
     g_return_if_fail (NAUTILUS_IS_FILE (file));
 
     NAUTILUS_FILE_CLASS (G_OBJECT_GET_CLASS (file))->call_when_ready
-        (file, file_attributes, callback, callback_data);
+        (file, attributes, callback, callback_data);
 }
 
 void
@@ -7812,8 +7812,8 @@ nautilus_file_invalidate_extension_info_internal (NautilusFile *file)
 }
 
 void
-nautilus_file_invalidate_attributes_internal (NautilusFile           *file,
-                                              NautilusFileAttributes  file_attributes)
+nautilus_file_invalidate_attributes_internal (NautilusFile       *file,
+                                              NautilusAttributes  attributes)
 {
     Request request;
 
@@ -7822,7 +7822,7 @@ nautilus_file_invalidate_attributes_internal (NautilusFile           *file,
         return;
     }
 
-    request = nautilus_directory_set_up_request (file_attributes);
+    request = nautilus_directory_set_up_request (attributes);
 
     if (REQUEST_WANTS_TYPE (request, REQUEST_DIRECTORY_COUNT))
     {
@@ -7912,20 +7912,20 @@ nautilus_file_set_thumbnail (NautilusFile *file,
  *
  * Invalidate the specified attributes and force a reload.
  * @file: NautilusFile representing the file in question.
- * @file_attributes: attributes to froget.
+ * @attributes: attributes to froget.
  **/
 
 void
-nautilus_file_invalidate_attributes (NautilusFile           *file,
-                                     NautilusFileAttributes  file_attributes)
+nautilus_file_invalidate_attributes (NautilusFile       *file,
+                                     NautilusAttributes  attributes)
 {
     /* Cancel possible in-progress loads of any of these attributes */
-    nautilus_directory_cancel_loading_file_attributes (file->details->directory,
-                                                       file,
-                                                       file_attributes);
+    nautilus_directory_cancel_loading_attributes (file->details->directory,
+                                                  file,
+                                                  attributes);
 
     /* Actually invalidate the values */
-    nautilus_file_invalidate_attributes_internal (file, file_attributes);
+    nautilus_file_invalidate_attributes_internal (file, attributes);
 
     nautilus_directory_add_file_to_work_queue (file->details->directory, file);
 
@@ -7933,22 +7933,22 @@ nautilus_file_invalidate_attributes (NautilusFile           *file,
     nautilus_directory_async_state_changed (file->details->directory);
 }
 
-NautilusFileAttributes
+NautilusAttributes
 nautilus_file_get_all_attributes (void)
 {
-    return NAUTILUS_FILE_ATTRIBUTE_INFO |
-           NAUTILUS_FILE_ATTRIBUTE_DEEP_COUNTS |
-           NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
-           NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO |
-           NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_INFO |
-           NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_BUFFER |
-           NAUTILUS_FILE_ATTRIBUTE_MOUNT;
+    return NAUTILUS_ATTRIBUTE_INFO |
+           NAUTILUS_ATTRIBUTE_DEEP_COUNT |
+           NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
+           NAUTILUS_ATTRIBUTE_EXTENSION_INFO |
+           NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO |
+           NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER |
+           NAUTILUS_ATTRIBUTE_MOUNT;
 }
 
 void
 nautilus_file_invalidate_all_attributes (NautilusFile *file)
 {
-    NautilusFileAttributes all_attributes;
+    NautilusAttributes all_attributes;
 
     all_attributes = nautilus_file_get_all_attributes ();
     nautilus_file_invalidate_attributes (file, all_attributes);
@@ -8285,7 +8285,7 @@ file_list_file_ready_callback (NautilusFile *file,
 
 void
 nautilus_file_list_call_when_ready (GList                     *file_list,
-                                    NautilusFileAttributes     attributes,
+                                    NautilusAttributes         attributes,
                                     NautilusFileListHandle   **handle,
                                     NautilusFileListCallback   callback,
                                     gpointer                   callback_data)
@@ -8962,7 +8962,7 @@ invalidate_extension_info (NautilusFileInfo *file_info)
 {
     NautilusFile *file = NAUTILUS_FILE (file_info);
 
-    nautilus_file_invalidate_attributes (file, NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO);
+    nautilus_file_invalidate_attributes (file, NAUTILUS_ATTRIBUTE_EXTENSION_INFO);
 }
 
 static char *

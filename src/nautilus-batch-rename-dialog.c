@@ -882,7 +882,7 @@ file_names_list_has_duplicates_async (NautilusBatchRenameDialog *self)
     for (l = self->distinct_parent_directories; l != NULL; l = l->next)
     {
         nautilus_directory_call_when_ready (l->data,
-                                            NAUTILUS_FILE_ATTRIBUTE_INFO,
+                                            NAUTILUS_ATTRIBUTE_INFO,
                                             TRUE,
                                             on_directory_attributes_ready_for_conflicts_check,
                                             self);

@@ -111,7 +111,7 @@ ensure_connected_file (NautilusSidebarRow *self)
         }
 
         self->file = g_steal_pointer (&file);
-        nautilus_file_call_when_ready (self->file, NAUTILUS_FILE_ATTRIBUTE_MOUNT, dummy_callback, self);
+        nautilus_file_call_when_ready (self->file, NAUTILUS_ATTRIBUTE_MOUNT, dummy_callback, self);
         g_signal_connect_object (self->file, "changed",
                                  G_CALLBACK (on_file_changed), self, G_CONNECT_SWAPPED);
     }

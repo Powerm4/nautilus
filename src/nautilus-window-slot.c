@@ -1603,8 +1603,8 @@ begin_location_change (NautilusWindowSlot         *self,
     g_assert (self->determine_view_file != NULL);
 
     nautilus_file_call_when_ready (self->determine_view_file,
-                                   NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                   NAUTILUS_FILE_ATTRIBUTE_MOUNT,
+                                   NAUTILUS_ATTRIBUTE_INFO |
+                                   NAUTILUS_ATTRIBUTE_MOUNT,
                                    got_file_info_for_view_selection_callback,
                                    self);
 }
@@ -1749,7 +1749,7 @@ nautilus_window_slot_set_viewed_file (NautilusWindowSlot *self,
 
     if (file != NULL)
     {
-        nautilus_file_monitor_add (file, self, NAUTILUS_FILE_ATTRIBUTE_INFO);
+        nautilus_file_monitor_add (file, self, NAUTILUS_ATTRIBUTE_INFO);
 
         g_signal_connect_object (file, "changed",
                                  G_CALLBACK (viewed_file_changed_callback), self, 0);
@@ -1803,8 +1803,8 @@ mount_not_mounted_callback (GObject      *source_object,
     {
         nautilus_file_invalidate_all_attributes (self->determine_view_file);
         nautilus_file_call_when_ready (self->determine_view_file,
-                                       NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                       NAUTILUS_FILE_ATTRIBUTE_MOUNT,
+                                       NAUTILUS_ATTRIBUTE_INFO |
+                                       NAUTILUS_ATTRIBUTE_MOUNT,
                                        got_file_info_for_view_selection_callback,
                                        self);
     }
@@ -2010,8 +2010,8 @@ handle_regular_file_if_needed (NautilusWindowSlot *self,
 
         nautilus_file_invalidate_all_attributes (self->determine_view_file);
         nautilus_file_call_when_ready (self->determine_view_file,
-                                       NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                       NAUTILUS_FILE_ATTRIBUTE_MOUNT,
+                                       NAUTILUS_ATTRIBUTE_INFO |
+                                       NAUTILUS_ATTRIBUTE_MOUNT,
                                        got_file_info_for_view_selection_callback,
                                        self);
 

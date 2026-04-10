@@ -161,15 +161,15 @@ static void     deep_count_load (DeepCountState *state,
 static gboolean request_is_satisfied (NautilusDirectory *directory,
                                       NautilusFile      *file,
                                       Request            request);
-static void     cancel_loading_attributes (NautilusDirectory     *directory,
-                                           NautilusFileAttributes file_attributes);
+static void     cancel_loading_attributes (NautilusDirectory *directory,
+                                           NautilusAttributes attributes);
 static void     add_all_files_to_work_queue (NautilusDirectory *directory);
 static void     move_file_to_low_priority_queue (NautilusDirectory *directory,
                                                  NautilusFile      *file);
 static void     move_file_to_extension_queue (NautilusDirectory *directory,
                                               NautilusFile      *file);
-static void     nautilus_directory_invalidate_file_attributes (NautilusDirectory     *directory,
-                                                               NautilusFileAttributes file_attributes);
+static void     nautilus_directory_invalidate_attributes (NautilusDirectory *directory,
+                                                          NautilusAttributes attributes);
 
 static void
 request_counter_add_request (RequestCounter counter,
@@ -640,52 +640,52 @@ remove_monitor (NautilusDirectory *directory,
 }
 
 Request
-nautilus_directory_set_up_request (NautilusFileAttributes file_attributes)
+nautilus_directory_set_up_request (NautilusAttributes attributes)
 {
     Request request;
 
     request = 0;
 
-    if ((file_attributes & NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT) != 0)
+    if ((attributes & NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT) != 0)
     {
         REQUEST_SET_TYPE (request, REQUEST_DIRECTORY_COUNT);
     }
 
-    if ((file_attributes & NAUTILUS_FILE_ATTRIBUTE_DEEP_COUNTS) != 0)
+    if ((attributes & NAUTILUS_ATTRIBUTE_DEEP_COUNT) != 0)
     {
         REQUEST_SET_TYPE (request, REQUEST_DEEP_COUNT);
     }
 
-    if ((file_attributes & NAUTILUS_FILE_ATTRIBUTE_INFO) != 0)
+    if ((attributes & NAUTILUS_ATTRIBUTE_INFO) != 0)
     {
         REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if ((file_attributes & NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO) != 0)
+    if ((attributes & NAUTILUS_ATTRIBUTE_EXTENSION_INFO) != 0)
     {
         REQUEST_SET_TYPE (request, REQUEST_EXTENSION_INFO);
     }
 
-    if ((file_attributes & NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_INFO) != 0)
+    if ((attributes & NAUTILUS_ATTRIBUTE_THUMBNAIL_INFO) != 0)
     {
         REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_INFO);
         REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (file_attributes & NAUTILUS_FILE_ATTRIBUTE_THUMBNAIL_BUFFER)
+    if (attributes & NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER)
     {
         REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_BUFFER);
         REQUEST_SET_TYPE (request, REQUEST_THUMBNAIL_INFO);
         REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (file_attributes & NAUTILUS_FILE_ATTRIBUTE_MOUNT)
+    if (attributes & NAUTILUS_ATTRIBUTE_MOUNT)
     {
         REQUEST_SET_TYPE (request, REQUEST_MOUNT);
         REQUEST_SET_TYPE (request, REQUEST_FILE_INFO);
     }
 
-    if (file_attributes & NAUTILUS_FILE_ATTRIBUTE_FILESYSTEM_INFO)
+    if (attributes & NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO)
     {
         REQUEST_SET_TYPE (request, REQUEST_FILESYSTEM_INFO);
     }
@@ -700,7 +700,7 @@ mime_db_changed_callback (GObject           *ignore,
     g_assert (dir != NULL);
     g_assert (dir->details != NULL);
 
-    nautilus_directory_force_reload_internal (dir, NAUTILUS_FILE_ATTRIBUTE_INFO);
+    nautilus_directory_force_reload_internal (dir, NAUTILUS_ATTRIBUTE_INFO);
 }
 
 void
@@ -708,7 +708,7 @@ nautilus_directory_monitor_add_internal (NautilusDirectory         *directory,
                                          NautilusFile              *file,
                                          gconstpointer              client,
                                          gboolean                   monitor_hidden_files,
-                                         NautilusFileAttributes     file_attributes,
+                                         NautilusAttributes         attributes,
                                          NautilusDirectoryCallback  callback,
                                          gpointer                   callback_data)
 {
@@ -725,7 +725,7 @@ nautilus_directory_monitor_add_internal (NautilusDirectory         *directory,
     monitor->file = file;
     monitor->monitor_hidden_files = monitor_hidden_files;
     monitor->client = client;
-    monitor->request = nautilus_directory_set_up_request (file_attributes);
+    monitor->request = nautilus_directory_set_up_request (attributes);
 
     if (file == NULL)
     {
@@ -1269,7 +1269,7 @@ ready_callback_call (NautilusDirectory   *directory,
 void
 nautilus_directory_call_when_ready_internal (NautilusDirectory         *directory,
                                              NautilusFile              *file,
-                                             NautilusFileAttributes     file_attributes,
+                                             NautilusAttributes         attributes,
                                              gboolean                   wait_for_file_list,
                                              NautilusDirectoryCallback  directory_callback,
                                              NautilusFileCallback       file_callback,
@@ -1293,7 +1293,7 @@ nautilus_directory_call_when_ready_internal (NautilusDirectory         *director
         callback.callback.file = file_callback;
     }
     callback.callback_data = callback_data;
-    callback.request = nautilus_directory_set_up_request (file_attributes);
+    callback.request = nautilus_directory_set_up_request (attributes);
     if (wait_for_file_list)
     {
         REQUEST_SET_TYPE (callback.request, REQUEST_FILE_LIST);
@@ -1343,15 +1343,15 @@ nautilus_directory_call_when_ready_internal (NautilusDirectory         *director
 }
 
 gboolean
-nautilus_directory_check_if_ready_internal (NautilusDirectory      *directory,
-                                            NautilusFile           *file,
-                                            NautilusFileAttributes  file_attributes)
+nautilus_directory_check_if_ready_internal (NautilusDirectory  *directory,
+                                            NautilusFile       *file,
+                                            NautilusAttributes  attributes)
 {
     Request request;
 
     g_assert (NAUTILUS_IS_DIRECTORY (directory));
 
-    request = nautilus_directory_set_up_request (file_attributes);
+    request = nautilus_directory_set_up_request (attributes);
     return request_is_satisfied (directory, file, request);
 }
 
@@ -2210,7 +2210,7 @@ file_list_start_or_stop (NautilusDirectory *directory)
 void
 nautilus_file_invalidate_count (NautilusFile *file)
 {
-    nautilus_file_invalidate_attributes (file, NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT);
+    nautilus_file_invalidate_attributes (file, NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT);
 }
 
 
@@ -2235,32 +2235,32 @@ nautilus_directory_invalidate_count (NautilusDirectory *directory)
 }
 
 static void
-nautilus_directory_invalidate_file_attributes (NautilusDirectory      *directory,
-                                               NautilusFileAttributes  file_attributes)
+nautilus_directory_invalidate_attributes (NautilusDirectory  *directory,
+                                          NautilusAttributes  attributes)
 {
     GList *node;
 
-    cancel_loading_attributes (directory, file_attributes);
+    cancel_loading_attributes (directory, attributes);
 
     for (node = directory->details->file_list; node != NULL; node = node->next)
     {
         nautilus_file_invalidate_attributes_internal (NAUTILUS_FILE (node->data),
-                                                      file_attributes);
+                                                      attributes);
     }
 
     if (directory->details->as_file != NULL)
     {
         nautilus_file_invalidate_attributes_internal (directory->details->as_file,
-                                                      file_attributes);
+                                                      attributes);
     }
 }
 
 void
-nautilus_directory_force_reload_internal (NautilusDirectory      *directory,
-                                          NautilusFileAttributes  file_attributes)
+nautilus_directory_force_reload_internal (NautilusDirectory  *directory,
+                                          NautilusAttributes  attributes)
 {
     /* invalidate attributes that are getting reloaded for all files */
-    nautilus_directory_invalidate_file_attributes (directory, file_attributes);
+    nautilus_directory_invalidate_attributes (directory, attributes);
 
     /* Start a new directory load. */
     file_list_cancel (directory);
@@ -4240,12 +4240,12 @@ cancel_filesystem_info_for_file (NautilusDirectory *directory,
 }
 
 static void
-cancel_loading_attributes (NautilusDirectory      *directory,
-                           NautilusFileAttributes  file_attributes)
+cancel_loading_attributes (NautilusDirectory  *directory,
+                           NautilusAttributes  attributes)
 {
     Request request;
 
-    request = nautilus_directory_set_up_request (file_attributes);
+    request = nautilus_directory_set_up_request (attributes);
 
     if (REQUEST_WANTS_TYPE (request, REQUEST_DIRECTORY_COUNT))
     {
@@ -4287,15 +4287,15 @@ cancel_loading_attributes (NautilusDirectory      *directory,
 }
 
 void
-nautilus_directory_cancel_loading_file_attributes (NautilusDirectory      *directory,
-                                                   NautilusFile           *file,
-                                                   NautilusFileAttributes  file_attributes)
+nautilus_directory_cancel_loading_attributes (NautilusDirectory  *directory,
+                                              NautilusFile       *file,
+                                              NautilusAttributes  attributes)
 {
     Request request;
 
     nautilus_directory_remove_file_from_work_queue (directory, file);
 
-    request = nautilus_directory_set_up_request (file_attributes);
+    request = nautilus_directory_set_up_request (attributes);
 
     if (REQUEST_WANTS_TYPE (request, REQUEST_DIRECTORY_COUNT))
     {

@@ -56,7 +56,7 @@ main (int    argc,
       char **argv)
 {
     NautilusDirectory *directory;
-    NautilusFileAttributes attributes;
+    NautilusAttributes attributes;
     const char *uri;
 
     client1 = g_new0 (int, 1);
@@ -82,11 +82,11 @@ main (int    argc,
     g_signal_connect (directory, "done-loading", G_CALLBACK (done_loading), NULL);
 
     attributes =
-        NAUTILUS_FILE_ATTRIBUTES_FOR_ICON |
-        NAUTILUS_FILE_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
-        NAUTILUS_FILE_ATTRIBUTE_INFO |
-        NAUTILUS_FILE_ATTRIBUTE_MOUNT |
-        NAUTILUS_FILE_ATTRIBUTE_EXTENSION_INFO;
+        NAUTILUS_ATTRIBUTES_FOR_ICON |
+        NAUTILUS_ATTRIBUTE_DIRECTORY_ITEM_COUNT |
+        NAUTILUS_ATTRIBUTE_INFO |
+        NAUTILUS_ATTRIBUTE_MOUNT |
+        NAUTILUS_ATTRIBUTE_EXTENSION_INFO;
 
     nautilus_directory_file_monitor_add (directory, client1, TRUE,
                                          attributes,

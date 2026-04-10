@@ -296,7 +296,7 @@ nautilus_bookmark_connect_file (NautilusBookmark *bookmark)
     }
 
     if (bookmark->file != NULL &&
-        nautilus_file_check_if_ready (bookmark->file, NAUTILUS_FILE_ATTRIBUTE_INFO))
+        nautilus_file_check_if_ready (bookmark->file, NAUTILUS_ATTRIBUTE_INFO))
     {
         bookmark_set_name_from_ready_file (bookmark, bookmark->file);
     }

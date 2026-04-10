@@ -602,8 +602,8 @@ file_ready_cb (NautilusFile *file,
 }
 
 void
-file_load_attributes (NautilusFile           *file,
-                      NautilusFileAttributes  attributes)
+file_load_attributes (NautilusFile       *file,
+                      NautilusAttributes  attributes)
 {
     gboolean done = FALSE;
 

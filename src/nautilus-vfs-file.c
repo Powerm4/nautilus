@@ -31,9 +31,9 @@
 G_DEFINE_TYPE (NautilusVFSFile, nautilus_vfs_file, NAUTILUS_TYPE_FILE);
 
 static void
-vfs_file_monitor_add (NautilusFile           *file,
-                      gconstpointer           client,
-                      NautilusFileAttributes  attributes)
+vfs_file_monitor_add (NautilusFile       *file,
+                      gconstpointer       client,
+                      NautilusAttributes  attributes)
 {
     NautilusDirectory *directory;
 
@@ -55,16 +55,16 @@ vfs_file_monitor_remove (NautilusFile  *file,
 }
 
 static void
-vfs_file_call_when_ready (NautilusFile           *file,
-                          NautilusFileAttributes  file_attributes,
-                          NautilusFileCallback    callback,
-                          gpointer                callback_data)
+vfs_file_call_when_ready (NautilusFile         *file,
+                          NautilusAttributes    attributes,
+                          NautilusFileCallback  callback,
+                          gpointer              callback_data)
 {
     NautilusDirectory *directory;
 
     directory = nautilus_file_get_directory (file);
 
-    nautilus_directory_call_when_ready_internal (directory, file, file_attributes,
+    nautilus_directory_call_when_ready_internal (directory, file, attributes,
                                                  FALSE, NULL, callback, callback_data);
 }
 
@@ -82,15 +82,15 @@ vfs_file_cancel_call_when_ready (NautilusFile         *file,
 }
 
 static gboolean
-vfs_file_check_if_ready (NautilusFile           *file,
-                         NautilusFileAttributes  file_attributes)
+vfs_file_check_if_ready (NautilusFile       *file,
+                         NautilusAttributes  attributes)
 {
     NautilusDirectory *directory;
 
     directory = nautilus_file_get_directory (file);
 
     return nautilus_directory_check_if_ready_internal (directory, file,
-                                                       file_attributes);
+                                                       attributes);
 }
 
 static void

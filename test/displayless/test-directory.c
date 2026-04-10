@@ -117,8 +117,8 @@ test_directory_call_when_ready (void)
     g_assert_cmpuint (nautilus_directory_number_outstanding (), ==, 1);
 
     nautilus_directory_call_when_ready (directory,
-                                        NAUTILUS_FILE_ATTRIBUTE_INFO |
-                                        NAUTILUS_FILE_ATTRIBUTE_DEEP_COUNTS,
+                                        NAUTILUS_ATTRIBUTE_INFO |
+                                        NAUTILUS_ATTRIBUTE_DEEP_COUNT,
                                         TRUE,
                                         callback_counter_directory_callback, data);
 
