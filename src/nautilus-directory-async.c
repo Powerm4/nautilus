@@ -168,8 +168,6 @@ static void     move_file_to_low_priority_queue (NautilusDirectory *directory,
                                                  NautilusFile      *file);
 static void     move_file_to_extension_queue (NautilusDirectory *directory,
                                               NautilusFile      *file);
-static void     nautilus_directory_invalidate_attributes (NautilusDirectory *directory,
-                                                          NautilusAttributes attributes);
 
 static void
 request_counter_add_request (RequestCounter counter,
