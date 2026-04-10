@@ -65,7 +65,7 @@ vfs_file_call_when_ready (NautilusFile         *file,
     directory = nautilus_file_get_directory (file);
 
     nautilus_directory_call_when_ready_internal (directory, file, attributes,
-                                                 FALSE, NULL, callback, callback_data);
+                                                 NULL, callback, callback_data);
 }
 
 static void

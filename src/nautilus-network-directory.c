@@ -372,7 +372,6 @@ network_callback_find (NautilusNetworkDirectory  *self,
 static void
 real_call_when_ready (NautilusDirectory         *directory,
                       NautilusAttributes         attributes,
-                      gboolean                   wait_for_file_list,
                       NautilusDirectoryCallback  callback,
                       gpointer                   callback_data)
 {
@@ -395,11 +394,9 @@ real_call_when_ready (NautilusDirectory         *directory,
 
     nautilus_directory_call_when_ready (self->computer_backend_directory,
                                         attributes,
-                                        wait_for_file_list,
                                         on_backend_directory_ready, network_callback);
     nautilus_directory_call_when_ready (self->network_backend_directory,
                                         attributes,
-                                        wait_for_file_list,
                                         on_backend_directory_ready, network_callback);
 }
 

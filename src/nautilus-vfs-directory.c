@@ -36,7 +36,6 @@ nautilus_vfs_directory_init (NautilusVFSDirectory *directory)
 static void
 vfs_call_when_ready (NautilusDirectory         *directory,
                      NautilusAttributes         attributes,
-                     gboolean                   wait_for_file_list,
                      NautilusDirectoryCallback  callback,
                      gpointer                   callback_data)
 {
@@ -46,7 +45,6 @@ vfs_call_when_ready (NautilusDirectory         *directory,
         (directory,
         NULL,
         attributes,
-        wait_for_file_list,
         callback,
         NULL,
         callback_data);

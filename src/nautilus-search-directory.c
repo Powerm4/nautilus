@@ -84,7 +84,6 @@ typedef struct
     gpointer callback_data;
 
     NautilusAttributes wait_for_attributes;
-    gboolean wait_for_file_list;
     GList *file_list;
     GHashTable *non_ready_hash;
 } SearchCallback;
@@ -434,7 +433,6 @@ file_list_to_hash_table (GList *file_list)
 static void
 search_call_when_ready (NautilusDirectory         *directory,
                         NautilusAttributes         attributes,
-                        gboolean                   wait_for_file_list,
                         NautilusDirectoryCallback  callback,
                         gpointer                   callback_data)
 {
@@ -460,9 +458,9 @@ search_call_when_ready (NautilusDirectory         *directory,
     search_callback->callback = callback;
     search_callback->callback_data = callback_data;
     search_callback->wait_for_attributes = attributes;
-    search_callback->wait_for_file_list = wait_for_file_list;
 
-    if (wait_for_file_list && !self->search_ready_and_valid)
+    if ((attributes & NAUTILUS_ATTRIBUTE_FILE_LIST) &&
+        !self->search_ready_and_valid)
     {
         /* Add it to the pending callback list, which will be
          * processed when the directory has valid data from the new

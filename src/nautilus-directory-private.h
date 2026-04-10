@@ -144,7 +144,6 @@ void               nautilus_directory_async_state_changed             (NautilusD
 void               nautilus_directory_call_when_ready_internal        (NautilusDirectory         *directory,
 								       NautilusFile              *file,
 								       NautilusAttributes         attributes,
-								       gboolean                   wait_for_file_list,
 								       NautilusDirectoryCallback  directory_callback,
 								       NautilusFileCallback       file_callback,
 								       gpointer                   callback_data);

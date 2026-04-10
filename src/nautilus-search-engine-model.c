@@ -225,8 +225,8 @@ start_search (NautilusSearchProvider *provider)
     g_set_object (&model->directory, directory);
 
     nautilus_directory_call_when_ready (model->directory,
-                                        NAUTILUS_ATTRIBUTE_INFO,
-                                        TRUE, model_directory_ready_cb, model);
+                                        NAUTILUS_ATTRIBUTE_INFO | NAUTILUS_ATTRIBUTE_FILE_LIST,
+                                        model_directory_ready_cb, model);
 }
 
 static void

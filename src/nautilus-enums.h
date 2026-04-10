@@ -70,6 +70,7 @@ typedef enum
     NAUTILUS_ATTRIBUTE_THUMBNAIL_BUFFER     = 1 << 5,
     NAUTILUS_ATTRIBUTE_MOUNT                = 1 << 6,
     NAUTILUS_ATTRIBUTE_FILESYSTEM_INFO      = 1 << 7,
+    NAUTILUS_ATTRIBUTE_FILE_LIST            = 1 << 8,
 } NautilusAttributes;
 
 typedef enum

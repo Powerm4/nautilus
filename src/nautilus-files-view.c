@@ -8531,7 +8531,6 @@ load_directory (NautilusFilesView *self,
     nautilus_directory_call_when_ready
         (self->directory,
         attributes,
-        FALSE,
         metadata_for_files_in_directory_ready_callback, self);
 
     /* If capabilities change, then we need to update the menus

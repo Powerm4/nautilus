@@ -1462,7 +1462,6 @@ nautilus_directory_get_file_by_name (NautilusDirectory *directory,
 void
 nautilus_directory_call_when_ready (NautilusDirectory         *directory,
                                     NautilusAttributes         attributes,
-                                    gboolean                   wait_for_all_files,
                                     NautilusDirectoryCallback  callback,
                                     gpointer                   callback_data)
 {
@@ -1470,7 +1469,7 @@ nautilus_directory_call_when_ready (NautilusDirectory         *directory,
     g_return_if_fail (callback != NULL);
 
     NAUTILUS_DIRECTORY_CLASS (G_OBJECT_GET_CLASS (directory))->call_when_ready
-        (directory, attributes, wait_for_all_files,
+        (directory, attributes,
         callback, callback_data);
 }
 

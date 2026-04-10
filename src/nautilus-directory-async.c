@@ -690,6 +690,11 @@ nautilus_directory_set_up_request (NautilusAttributes attributes)
         REQUEST_SET_TYPE (request, REQUEST_FILESYSTEM_INFO);
     }
 
+    if (attributes & NAUTILUS_ATTRIBUTE_FILE_LIST)
+    {
+        REQUEST_SET_TYPE (request, REQUEST_FILE_LIST);
+    }
+
     return request;
 }
 
@@ -1270,7 +1275,6 @@ void
 nautilus_directory_call_when_ready_internal (NautilusDirectory         *directory,
                                              NautilusFile              *file,
                                              NautilusAttributes         attributes,
-                                             gboolean                   wait_for_file_list,
                                              NautilusDirectoryCallback  directory_callback,
                                              NautilusFileCallback       file_callback,
                                              gpointer                   callback_data)
@@ -1294,10 +1298,6 @@ nautilus_directory_call_when_ready_internal (NautilusDirectory         *director
     }
     callback.callback_data = callback_data;
     callback.request = nautilus_directory_set_up_request (attributes);
-    if (wait_for_file_list)
-    {
-        REQUEST_SET_TYPE (callback.request, REQUEST_FILE_LIST);
-    }
 
     /* Handle the NULL case. */
     if (directory == NULL)

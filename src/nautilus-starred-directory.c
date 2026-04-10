@@ -52,7 +52,6 @@ typedef struct
     NautilusDirectoryCallback callback;
     gpointer callback_data;
 
-    gboolean wait_for_file_list;
     GList *file_list;
 } FavoriteCallback;
 
@@ -199,7 +198,6 @@ real_is_editable (NautilusDirectory *directory)
 static void
 real_call_when_ready (NautilusDirectory         *directory,
                       NautilusAttributes         attributes,
-                      gboolean                   wait_for_file_list,
                       NautilusDirectoryCallback  callback,
                       gpointer                   callback_data)
 {

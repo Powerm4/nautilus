@@ -118,8 +118,8 @@ test_directory_call_when_ready (void)
 
     nautilus_directory_call_when_ready (directory,
                                         NAUTILUS_ATTRIBUTE_INFO |
-                                        NAUTILUS_ATTRIBUTE_DEEP_COUNT,
-                                        TRUE,
+                                        NAUTILUS_ATTRIBUTE_DEEP_COUNT |
+                                        NAUTILUS_ATTRIBUTE_FILE_LIST,
                                         callback_counter_directory_callback, data);
 
     callback_counter_await (data);

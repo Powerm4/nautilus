@@ -281,8 +281,7 @@ nautilus_filename_validator_validate (NautilusFilenameValidator *self)
     g_return_if_fail (NAUTILUS_IS_DIRECTORY (self->containing_directory));
 
     nautilus_directory_call_when_ready (self->containing_directory,
-                                        NAUTILUS_ATTRIBUTE_INFO,
-                                        TRUE,
+                                        NAUTILUS_ATTRIBUTE_INFO | NAUTILUS_ATTRIBUTE_FILE_LIST,
                                         on_directory_info_ready_to_validate,
                                         self);
 }
@@ -329,8 +328,7 @@ nautilus_filename_validator_try_accept (NautilusFilenameValidator *self)
     g_return_if_fail (NAUTILUS_IS_DIRECTORY (self->containing_directory));
 
     nautilus_directory_call_when_ready (self->containing_directory,
-                                        NAUTILUS_ATTRIBUTE_INFO,
-                                        TRUE,
+                                        NAUTILUS_ATTRIBUTE_INFO | NAUTILUS_ATTRIBUTE_FILE_LIST,
                                         on_directory_info_ready_to_try_accept,
                                         self);
 }

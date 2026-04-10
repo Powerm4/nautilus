@@ -109,7 +109,6 @@ typedef struct
 					  NautilusFile              *file);
 	void     (* call_when_ready)     (NautilusDirectory         *directory,
 					  NautilusAttributes         attributes,
-					  gboolean                   wait_for_file_list,
 					  NautilusDirectoryCallback  callback,
 					  gpointer                   callback_data);
 	void     (* cancel_callback)     (NautilusDirectory         *directory,
@@ -189,7 +188,6 @@ NautilusFile *     nautilus_directory_get_corresponding_file   (NautilusDirector
  */
 void               nautilus_directory_call_when_ready          (NautilusDirectory         *directory,
 								NautilusAttributes         attributes,
-								gboolean                   wait_for_all_files,
 								NautilusDirectoryCallback  callback,
 								gpointer                   callback_data);
 void               nautilus_directory_cancel_callback          (NautilusDirectory         *directory,
