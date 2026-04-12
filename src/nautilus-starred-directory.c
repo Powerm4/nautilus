@@ -52,7 +52,6 @@ typedef struct
     NautilusDirectoryCallback callback;
     gpointer callback_data;
 
-    NautilusFileAttributes wait_for_attributes;
     gboolean wait_for_file_list;
     GList *file_list;
 } FavoriteCallback;
