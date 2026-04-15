@@ -20,6 +20,7 @@ template $NautilusPropertiesWidget: Adw.Bin {
               visible: bind popout_button.visible;
               icon-name: "external-link-symbolic";
               clicked => $popout_window_clicked(template);
+              tooltip-text: bind popout_button.tooltip-text;
             }
           }
 
@@ -56,6 +57,7 @@ template $NautilusPropertiesWidget: Adw.Bin {
             Button popout_button {
               visible: false;
               icon-name: "external-link-symbolic";
+              tooltip-text: _("Detach Window");
               clicked => $popout_window_clicked(template);
             }
           }
