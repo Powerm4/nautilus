@@ -261,23 +261,17 @@ nautilus_g_menu_replace_string_in_item (GMenu       *menu,
     g_menu_insert_item (menu, i, item);
 }
 
-static GdkPixbuf *filmholes_left = NULL;
-static GdkPixbuf *filmholes_right = NULL;
+static GdkTexture *filmholes_left = NULL;
 
 static gboolean
 ensure_filmholes (void)
 {
     if (filmholes_left == NULL)
     {
-        filmholes_left = gdk_pixbuf_new_from_resource ("/org/gnome/nautilus/image/filmholes.png", NULL);
-    }
-    if (filmholes_right == NULL &&
-        filmholes_left != NULL)
-    {
-        filmholes_right = gdk_pixbuf_flip (filmholes_left, TRUE);
+        filmholes_left = gdk_texture_new_from_resource ("/org/gnome/nautilus/image/filmholes.png");
     }
 
-    return (filmholes_left && filmholes_right);
+    return filmholes_left != NULL;
 }
 
 void
@@ -285,25 +279,23 @@ nautilus_ui_frame_video (GtkSnapshot *snapshot,
                          gdouble      width,
                          gdouble      height)
 {
-    g_autoptr (GdkTexture) left_texture = NULL;
-    g_autoptr (GdkTexture) right_texture = NULL;
     int holes_width, holes_height;
+    graphene_matrix_t matrix = { 0 };
 
     if (!ensure_filmholes ())
     {
         return;
     }
 
-    holes_width = gdk_pixbuf_get_width (filmholes_left);
-    holes_height = gdk_pixbuf_get_height (filmholes_left);
+    holes_width = gdk_texture_get_width (filmholes_left);
+    holes_height = gdk_texture_get_height (filmholes_left);
 
     /* Left */
     gtk_snapshot_push_repeat (snapshot,
                               &GRAPHENE_RECT_INIT (0, 0, holes_width, height),
                               NULL);
-    left_texture = gdk_texture_new_for_pixbuf (filmholes_left);
     gtk_snapshot_append_texture (snapshot,
-                                 left_texture,
+                                 filmholes_left,
                                  &GRAPHENE_RECT_INIT (0, 0, holes_width, holes_height));
     gtk_snapshot_pop (snapshot);
 
@@ -311,10 +303,14 @@ nautilus_ui_frame_video (GtkSnapshot *snapshot,
     gtk_snapshot_push_repeat (snapshot,
                               &GRAPHENE_RECT_INIT (width - holes_width, 0, holes_width, height),
                               NULL);
-    right_texture = gdk_texture_new_for_pixbuf (filmholes_right);
+    graphene_matrix_init_identity (&matrix);
+    graphene_matrix_rotate_y (&matrix, 180.0);
+    gtk_snapshot_transform_matrix (snapshot, &matrix);
     gtk_snapshot_append_texture (snapshot,
-                                 right_texture,
-                                 &GRAPHENE_RECT_INIT (width - holes_width, 0, holes_width, holes_height));
+                                 filmholes_left,
+                                 &GRAPHENE_RECT_INIT (-width, 0, holes_width, holes_height));
+    graphene_matrix_inverse (&matrix, &matrix);
+    gtk_snapshot_transform_matrix (snapshot, &matrix);
     gtk_snapshot_pop (snapshot);
 }
 
