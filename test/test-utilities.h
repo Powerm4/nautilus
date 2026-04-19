@@ -67,4 +67,6 @@ void make_image_file_full (GFile  *file,
                            guint   width,
                            guint   height,
                            guint64 mtime);
+void make_image_file_with_mtime (GFile *file,
+                                 guint64 mtime);
 void make_image_file (GFile *file);

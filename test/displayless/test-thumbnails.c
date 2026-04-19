@@ -200,6 +200,50 @@ test_thumbnail_image (void)
 }
 
 static void
+test_thumbnail_old_time (void)
+{
+    const guint64 old_mtime = 1;
+    g_autoptr (GFile) image_location = g_file_new_build_filename (test_get_tmp_dir (),
+                                                                  "Image.png",
+                                                                  NULL);
+    g_autofree gchar *uri = g_file_get_uri (image_location);
+
+    make_image_file_with_mtime (image_location, old_mtime);
+
+    g_autofree gchar *mime_type = NULL;
+    guint64 mtime = get_file_mime_type_and_mtime (image_location, &mime_type);
+
+    g_assert_true (nautilus_thumbnail_is_mimetype_limited_by_size (mime_type));
+    g_assert_cmpint (mtime, ==, old_mtime);
+
+    g_autofree gchar *thumbnail_path = nautilus_thumbnail_get_path_for_uri (uri);
+    g_autoptr (GFile) thumbnail_location = g_file_new_for_path (thumbnail_path);
+    g_autoptr (GdkPaintable) icon_paintable = NULL;
+    g_auto (ThumbnailCallbackData) thumbnailing_data = { NULL, FALSE, NULL };
+
+    nautilus_create_thumbnail_async (uri,
+                                     mime_type,
+                                     mtime,
+                                     NULL,
+                                     thumbnailing_done_cb,
+                                     &thumbnailing_data);
+
+    ITER_CONTEXT_WHILE (!thumbnailing_data.done);
+
+    g_assert_true (g_file_query_exists (thumbnail_location, NULL));
+    g_assert_nonnull (thumbnailing_data.pixbuf);
+    g_assert_no_error (thumbnailing_data.error);
+    g_assert_true (file_has_valid_thumbnail_path (image_location, thumbnail_path));
+
+    g_assert_cmpint (gdk_pixbuf_get_height (thumbnailing_data.pixbuf), ==, DEFAULT_IMAGE_SIZE);
+    g_assert_cmpint (gdk_pixbuf_get_width (thumbnailing_data.pixbuf), ==, DEFAULT_IMAGE_SIZE);
+
+    g_assert_true (g_file_delete (thumbnail_location, NULL, NULL));
+
+    test_clear_tmp_dir ();
+}
+
+static void
 test_thumbnail_image_no_mtime (void)
 {
     g_autoptr (GFile) image_location = g_file_new_build_filename (test_get_tmp_dir (),
@@ -488,6 +532,8 @@ main (int   argc,
                      test_thumbnail_text);
     g_test_add_func ("/thumbnail/single/image",
                      test_thumbnail_image);
+    g_test_add_func ("/thumbnail/single/old-time",
+                     test_thumbnail_old_time);
     g_test_add_func ("/thumbnail/single/no-mtime",
                      test_thumbnail_image_no_mtime);
     g_test_add_func ("/thumbnail/single/cancel",

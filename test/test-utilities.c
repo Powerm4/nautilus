@@ -682,6 +682,15 @@ make_image_file_full (GFile  *file,
 }
 
 void
+make_image_file_with_mtime (GFile   *file,
+                            guint64  mtime)
+{
+    guint8 yellow[4] = {255, 255, 0, 0};
+
+    make_image_file_full (file, yellow, DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE, mtime);
+}
+
+void
 make_image_file (GFile *file)
 {
     guint8 yellow[4] = {255, 255, 0, 0};
