@@ -408,7 +408,7 @@ nautilus_create_thumbnail_async (const gchar         *uri,
         return;
     }
 
-    if (modified_time == 0)
+    if (modified_time == INVALID_MTIME)
     {
         g_autoptr (GFile) file = g_file_new_for_uri (info->image_uri);
         g_autofree ThumbnailMtimeQuery *mtime_query_data = g_new0 (ThumbnailMtimeQuery, 1);
