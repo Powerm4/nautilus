@@ -170,6 +170,10 @@ test_create_file_from_template (void)
     g_autoptr (GFile) created_file = g_file_new_build_filename (test_get_tmp_dir (),
                                                                 filename,
                                                                 NULL);
+    const char *duplicate_filename = "created_file_from_template (2).txt";
+    g_autoptr (GFile) duplicate_created_file = g_file_new_build_filename (test_get_tmp_dir (),
+                                                                          duplicate_filename,
+                                                                          NULL);
     CreateTestData data = { created_file, FALSE };
     const char *mime_type = "text/plain";
 
@@ -193,6 +197,29 @@ test_create_file_from_template (void)
     test_operation_redo ();
 
     assert_file_content (created_file, contents, content_length, mime_type);
+
+    /* Try to create from the template with the same name to verify conflict
+     * resolution. */
+    data.file = duplicate_created_file;
+    data.success = FALSE;
+    nautilus_file_operations_new_file_from_template (NULL,
+                                                     parent_uri,
+                                                     filename,
+                                                     template_uri,
+                                                     create_done_callback,
+                                                     &data);
+
+    ITER_CONTEXT_WHILE (!data.success);
+
+    assert_file_content (duplicate_created_file, contents, content_length, mime_type);
+
+    test_operation_undo ();
+
+    g_assert_false (g_file_query_exists (duplicate_created_file, NULL));
+
+    test_operation_redo ();
+
+    assert_file_content (duplicate_created_file, contents, content_length, mime_type);
 
     test_clear_tmp_dir ();
 }
