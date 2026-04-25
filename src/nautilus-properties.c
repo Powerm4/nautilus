@@ -2284,11 +2284,26 @@ get_parent_location (NautilusFile *file)
 static gboolean
 should_show_location_info (NautilusPropertiesWidget *self)
 {
-    g_autoptr (GFile) first_parent = get_parent_location (get_file (self));
+    NautilusFile *file = get_file (self);
+    g_autoptr (GFile) first_parent = get_parent_location (file);
 
-    if (first_parent == NULL || nautilus_file_is_in_trash (get_file (self)))
+    if (first_parent == NULL || nautilus_file_is_in_trash (file))
     {
         return FALSE;
+    }
+
+    g_autoptr (GFile) location = nautilus_file_get_location (file);
+    g_autoptr (GMount) mount = g_file_find_enclosing_mount (location, NULL, NULL);
+
+    if (mount != NULL)
+    {
+        g_autoptr (GFile) mount_root = g_mount_get_root (mount);
+
+        if (mount_root != NULL &&
+            g_file_equal (first_parent, mount_root))
+        {
+            return FALSE;
+        }
     }
 
     if (is_multi_file_window (self))
