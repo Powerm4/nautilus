@@ -92,7 +92,10 @@
     {
       "name": "localsearch",
       "buildsystem": "meson",
-      "cleanup": [ "/bin", "/etc" ],
+      "cleanup": [
+        "/bin",
+        "/etc"
+      ],
       "config-opts": [
         "-Dfunctional_tests=false",
         "-Dsandbox_tests=false",
@@ -166,7 +169,7 @@
         "--libdir=/app/lib",
         "--buildtype=debugoptimized"
       ],
-      "sources" : [
+      "sources": [
         {
           "type": "git",
           "url": "https://github.com/flatpak/libportal.git",
@@ -179,10 +182,10 @@
       "buildsystem": "meson",
       "builddir": true,
       "config-opts": [
-      	"-Dintrospection=false",
-      	"-Dvapigen=false"
+        "-Dintrospection=false",
+        "-Dvapigen=false"
       ],
-      "sources" : [
+      "sources": [
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/libcloudproviders.git"
